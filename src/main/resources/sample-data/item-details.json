@@ -1,0 +1,367 @@
+{
+  "data": [
+    {
+      "item": {
+        "id": 1,
+        "name": "name_5e76bd43a8da",
+        "description": "description_8d1e74aed6a7",
+        "clientId": "clientId_4180deb801af",
+        "availability": false,
+        "price": 0.00,
+        "minBiddingPrice": 0.00,
+        "maxBiddingPrice": 0.00,
+        "entryDate": "2024-06-05 00:21:15",
+        "expiryDate": "2024-06-05 00:21:15"
+      },
+      "bidders": [
+        {
+          "id": 1,
+          "firstName": "firstName_df290f1dd1b2",
+          "lastName": "lastName_bf344a46ef69",
+          "userName": "userName_78a4afb1c6f4",
+          "type": "REGULAR"
+        },
+        {
+          "id": 2,
+          "firstName": "firstName_1299f9c3ec28",
+          "lastName": "lastName_bcfe3bd547da",
+          "userName": "userName_9abb83d0c6cb",
+          "type": "REGULAR"
+        },
+        {
+          "id": 3,
+          "firstName": "firstName_6e396e43791c",
+          "lastName": "lastName_0cf98ee4ca72",
+          "userName": "userName_ca826ef0a784",
+          "type": "REGULAR"
+        },
+        {
+          "id": 4,
+          "firstName": "firstName_63890ac767c3",
+          "lastName": "lastName_c91676fb9084",
+          "userName": "userName_8ee4fa6d1266",
+          "type": "REGULAR"
+        }
+      ],
+      "biddingDate": "2024-06-05 00:21:15",
+      "maxBiddingPrice": 0.00,
+      "lastBiddingPrice": 0.00
+    },
+    {
+      "item": {
+        "id": 2,
+        "name": "name_5365033d788e",
+        "description": "description_f80592462f6e",
+        "clientId": "clientId_03df743f7c88",
+        "availability": false,
+        "price": 0.00,
+        "minBiddingPrice": 0.00,
+        "maxBiddingPrice": 0.00,
+        "entryDate": "2024-06-05 00:21:20",
+        "expiryDate": "2024-06-05 00:21:20"
+      },
+      "bidders": [
+        {
+          "id": 3,
+          "firstName": "firstName_6e396e43791c",
+          "lastName": "lastName_0cf98ee4ca72",
+          "userName": "userName_ca826ef0a784",
+          "type": "REGULAR"
+        },
+        {
+          "id": 1,
+          "firstName": "firstName_df290f1dd1b2",
+          "lastName": "lastName_bf344a46ef69",
+          "userName": "userName_78a4afb1c6f4",
+          "type": "REGULAR"
+        }
+      ],
+      "biddingDate": "2024-06-05 00:21:20",
+      "maxBiddingPrice": 0.00,
+      "lastBiddingPrice": 0.00
+    },
+    {
+      "item": {
+        "id": 3,
+        "name": "name_1a7e5f928592",
+        "description": "description_0d96b6cc4491",
+        "clientId": "clientId_c9b0a0f33c0c",
+        "availability": false,
+        "price": 0.00,
+        "minBiddingPrice": 0.00,
+        "maxBiddingPrice": 0.00,
+        "entryDate": "2024-06-05 00:21:26",
+        "expiryDate": "2024-06-05 00:21:26"
+      },
+      "bidders": [
+        {
+          "id": 2,
+          "firstName": "firstName_1299f9c3ec28",
+          "lastName": "lastName_bcfe3bd547da",
+          "userName": "userName_9abb83d0c6cb",
+          "type": "REGULAR"
+        },
+        {
+          "id": 3,
+          "firstName": "firstName_6e396e43791c",
+          "lastName": "lastName_0cf98ee4ca72",
+          "userName": "userName_ca826ef0a784",
+          "type": "REGULAR"
+        },
+        {
+          "id": 4,
+          "firstName": "firstName_63890ac767c3",
+          "lastName": "lastName_c91676fb9084",
+          "userName": "userName_8ee4fa6d1266",
+          "type": "REGULAR"
+        }
+      ],
+      "biddingDate": "2024-06-05 00:21:26",
+      "maxBiddingPrice": 0.00,
+      "lastBiddingPrice": 0.00
+    },
+    {
+      "item": {
+        "id": 4,
+        "name": "name_df8c54e85d1c",
+        "description": "description_8a183f1309ef",
+        "clientId": "clientId_b3585f2cd293",
+        "availability": false,
+        "price": 0.00,
+        "minBiddingPrice": 0.00,
+        "maxBiddingPrice": 0.00,
+        "entryDate": "2024-06-05 00:21:36",
+        "expiryDate": "2024-06-05 00:21:36"
+      },
+      "bidders": [
+        {
+          "id": 3,
+          "firstName": "firstName_6e396e43791c",
+          "lastName": "lastName_0cf98ee4ca72",
+          "userName": "userName_ca826ef0a784",
+          "type": "REGULAR"
+        },
+        {
+          "id": 1,
+          "firstName": "firstName_df290f1dd1b2",
+          "lastName": "lastName_bf344a46ef69",
+          "userName": "userName_78a4afb1c6f4",
+          "type": "REGULAR"
+        }
+      ],
+      "biddingDate": "2024-06-05 00:21:36",
+      "maxBiddingPrice": 0.00,
+      "lastBiddingPrice": 0.00
+    },
+    {
+      "item": {
+        "id": 5,
+        "name": "name_2b41af489dec",
+        "description": "description_4d13e0217242",
+        "clientId": "clientId_8aca46bdad66",
+        "availability": false,
+        "price": 0.00,
+        "minBiddingPrice": 0.00,
+        "maxBiddingPrice": 0.00,
+        "entryDate": "2024-06-05 00:21:44",
+        "expiryDate": "2024-06-05 00:21:44"
+      },
+      "bidders": [
+        {
+          "id": 2,
+          "firstName": "firstName_1299f9c3ec28",
+          "lastName": "lastName_bcfe3bd547da",
+          "userName": "userName_9abb83d0c6cb",
+          "type": "REGULAR"
+        },
+        {
+          "id": 3,
+          "firstName": "firstName_6e396e43791c",
+          "lastName": "lastName_0cf98ee4ca72",
+          "userName": "userName_ca826ef0a784",
+          "type": "REGULAR"
+        }
+      ],
+      "biddingDate": "2024-06-05 00:21:44",
+      "maxBiddingPrice": 0.00,
+      "lastBiddingPrice": 0.00
+    },
+    {
+      "item": {
+        "id": 6,
+        "name": "name_a74731f1124b",
+        "description": "description_9b7ebd06bd0d",
+        "clientId": "clientId_d29c190307d5",
+        "availability": false,
+        "price": 0.00,
+        "minBiddingPrice": 0.00,
+        "maxBiddingPrice": 0.00,
+        "entryDate": "2024-06-05 00:21:51",
+        "expiryDate": "2024-06-05 00:21:51"
+      },
+      "bidders": [
+        {
+          "id": 3,
+          "firstName": "firstName_6e396e43791c",
+          "lastName": "lastName_0cf98ee4ca72",
+          "userName": "userName_ca826ef0a784",
+          "type": "REGULAR"
+        },
+        {
+          "id": 4,
+          "firstName": "firstName_63890ac767c3",
+          "lastName": "lastName_c91676fb9084",
+          "userName": "userName_8ee4fa6d1266",
+          "type": "REGULAR"
+        },
+        {
+          "id": 6,
+          "firstName": "firstName_0c1e13b86f85",
+          "lastName": "lastName_db672400b63e",
+          "userName": "userName_8b9da89230f7",
+          "type": "REGULAR"
+        }
+      ],
+      "biddingDate": "2024-06-05 00:21:51",
+      "maxBiddingPrice": 0.00,
+      "lastBiddingPrice": 0.00
+    },
+    {
+      "item": {
+        "id": 7,
+        "name": "name_9f1f8a494d96",
+        "description": "description_04fc68123c6e",
+        "clientId": "clientId_ff2519ae3521",
+        "availability": false,
+        "price": 0.00,
+        "minBiddingPrice": 0.00,
+        "maxBiddingPrice": 0.00,
+        "entryDate": "2024-06-05 00:21:55",
+        "expiryDate": "2024-06-05 00:21:55"
+      },
+      "bidders": [
+        {
+          "id": 5,
+          "firstName": "firstName_f13465bb4b37",
+          "lastName": "lastName_55d42391adaa",
+          "userName": "userName_5c6694ca5597",
+          "type": "REGULAR"
+        }
+      ],
+      "biddingDate": "2024-06-05 00:21:55",
+      "maxBiddingPrice": 0.00,
+      "lastBiddingPrice": 0.00
+    },
+    {
+      "item": {
+        "id": 8,
+        "name": "name_0bc7c3225ae6",
+        "description": "description_a986fa9a1ea8",
+        "clientId": "clientId_661adac23559",
+        "availability": false,
+        "price": 0.00,
+        "minBiddingPrice": 0.00,
+        "maxBiddingPrice": 0.00,
+        "entryDate": "2024-06-05 00:22:01",
+        "expiryDate": "2024-06-05 00:22:01"
+      },
+      "bidders": [
+        {
+          "id": 7,
+          "firstName": "firstName_ac761fdd83a3",
+          "lastName": "lastName_301802c1fc58",
+          "userName": "userName_ff0942786bb7",
+          "type": "REGULAR"
+        }
+      ],
+      "biddingDate": "2024-06-05 00:22:01",
+      "maxBiddingPrice": 0.00,
+      "lastBiddingPrice": 0.00
+    },
+    {
+      "item": {
+        "id": 9,
+        "name": "name_0c79cabf7b4e",
+        "description": "description_2ef1dd1e3c50",
+        "clientId": "clientId_f419019f4605",
+        "availability": false,
+        "price": 0.00,
+        "minBiddingPrice": 0.00,
+        "maxBiddingPrice": 0.00,
+        "entryDate": "2024-06-05 00:22:07",
+        "expiryDate": "2024-06-05 00:22:07"
+      },
+      "bidders": [
+        {
+          "id": 7,
+          "firstName": "firstName_ac761fdd83a3",
+          "lastName": "lastName_301802c1fc58",
+          "userName": "userName_ff0942786bb7",
+          "type": "REGULAR"
+        }
+      ],
+      "biddingDate": "2024-06-05 00:22:07",
+      "maxBiddingPrice": 0.00,
+      "lastBiddingPrice": 0.00
+    },
+    {
+      "item": {
+        "id": 10,
+        "name": "name_c7709a5a6c48",
+        "description": "description_f8a151d4497c",
+        "clientId": "clientId_f2e5acfe726d",
+        "availability": false,
+        "price": 0.00,
+        "minBiddingPrice": 0.00,
+        "maxBiddingPrice": 0.00,
+        "entryDate": "2024-06-05 00:22:12",
+        "expiryDate": "2024-06-05 00:22:12"
+      },
+      "bidders": [
+        {
+          "id": 5,
+          "firstName": "firstName_f13465bb4b37",
+          "lastName": "lastName_55d42391adaa",
+          "userName": "userName_5c6694ca5597",
+          "type": "REGULAR"
+        }
+      ],
+      "biddingDate": "2024-06-05 00:22:12",
+      "maxBiddingPrice": 0.00,
+      "lastBiddingPrice": 0.00
+    },
+    {
+      "item": {
+        "id": 11,
+        "name": "name_88a63e57b5ac",
+        "description": "description_71842a0deb15",
+        "clientId": "clientId_32c06d5ed9a7",
+        "availability": false,
+        "price": 0.00,
+        "minBiddingPrice": 0.00,
+        "maxBiddingPrice": 0.00,
+        "entryDate": "2024-06-05 00:22:34",
+        "expiryDate": "2024-06-05 00:22:34"
+      },
+      "bidders": [
+        {
+          "id": 4,
+          "firstName": "firstName_63890ac767c3",
+          "lastName": "lastName_c91676fb9084",
+          "userName": "userName_8ee4fa6d1266",
+          "type": "REGULAR"
+        },
+        {
+          "id": 5,
+          "firstName": "firstName_f13465bb4b37",
+          "lastName": "lastName_55d42391adaa",
+          "userName": "userName_5c6694ca5597",
+          "type": "REGULAR"
+        }
+      ],
+      "biddingDate": "2024-06-05 00:22:34",
+      "maxBiddingPrice": 0.00,
+      "lastBiddingPrice": 0.00
+    }
+  ]
+}
