@@ -9,31 +9,30 @@ import com.system.bidding.infrastructure.web.response.record.Announcement;
 import com.system.bidding.infrastructure.web.response.record.BiddingHistory;
 import com.system.bidding.infrastructure.web.response.record.Item;
 import com.system.bidding.infrastructure.web.response.record.ItemBiddingDetails;
-import com.system.bidding.ports.outgoing.BiddingService;
+import com.system.bidding.ports.outgoing.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
 /**
- * LinkedIn : https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1
+ * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
 @Slf4j
 @Service
-@Primary
+//@Primary
 @RequiredArgsConstructor
-public class BiddingServiceDBAdapter implements BiddingService {
+public class ItemServiceDBAdapter implements ItemService {
 
-    private final ItemRepository itemRepository;
-    private final AnnouncementRepository announcementRepository;
     private final BiddingHistoryRepository biddingHistoryRepository;
+    private final AnnouncementRepository announcementRepository;
+    private final ItemRepository itemRepository;
     private final ItemMapping itemMapping;
 
     /**
@@ -44,21 +43,21 @@ public class BiddingServiceDBAdapter implements BiddingService {
     @SneakyThrows
     public PagedListHolder<Item> getItemList(final Pageable pageable) {
 
-        final var listHolder = new PagedListHolder<Item>();
-        listHolder.setSource(itemMapping.from(itemRepository.findAll()));
-        listHolder.setPage(pageable.getPageNumber()-1);
-        listHolder.setPageSize(pageable.getPageSize());
-        return listHolder;
+        final var holder = new PagedListHolder<Item>();
+        holder.setSource(itemMapping.from(itemRepository.findAll()));
+        holder.setPage(pageable.getPageNumber() - 1);
+        holder.setPageSize(pageable.getPageSize());
+        return holder;
     }
 
     /**
-     * @param clientId : clientId's parameter
+     * @param userId   : security principal
      * @param pageable : pageable's parameter
      * @return list of Item
      */
     @Override
     public PagedListHolder<Item> getItemList(
-            final Long clientId,
+            final Long userId,
             final Pageable pageable) {
 
         log.warn("Not implementation yet");
@@ -66,13 +65,13 @@ public class BiddingServiceDBAdapter implements BiddingService {
     }
 
     /**
-     * @param bidderId     :Bidder's ID
+     * @param userId       : security principal
      * @param requestParam : page request
      * @return list of BiddingHistory
      */
     @Override
     public PagedListHolder<BiddingHistory> getBiddingHistory(
-            final Long bidderId,
+            final Long userId,
             final ItemParam requestParam) {
 
         log.warn("Not implementation yet");

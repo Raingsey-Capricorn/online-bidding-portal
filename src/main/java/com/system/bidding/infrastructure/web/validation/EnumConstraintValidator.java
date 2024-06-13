@@ -8,7 +8,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * LinkedIn : https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1
+ * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
@@ -23,7 +23,12 @@ public class EnumConstraintValidator implements ConstraintValidator<EnumValidate
     @Override
     @SneakyThrows
     public boolean isValid(Enum anEnum, ConstraintValidatorContext constraintValidatorContext) {
-        return SecurityConstant.AuthorizationRole.list()
-                .contains(SecurityConstant.AuthorizationRole.valueOf(anEnum.name()));
+
+        if (anEnum.describeConstable().isPresent() && anEnum.getDeclaringClass().isEnum()) {
+            return SecurityConstant.AuthorizationRole.list()
+                    .contains(SecurityConstant.AuthorizationRole.valueOf(anEnum.name()));
+        }
+        return true;
+
     }
 }

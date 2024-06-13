@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * LinkedIn : https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1
+ * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
@@ -37,8 +37,8 @@ public abstract class JsonLoader {
     public interface ResourceAsJSON<T> {
 
         /**
-         * Load data from JSON file based on generic type
-         * T : type of data represent the data from JSON
+         * Load data from JSON file based on generic authorizationProvider
+         * T : authorizationProvider of data represent the data from JSON
          *
          * @return List of data from file
          */

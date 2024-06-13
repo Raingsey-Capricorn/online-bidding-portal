@@ -7,8 +7,8 @@ import java.io.Serializable;
 
 @Builder
 public record SignInParam(
-        @StringValidate(type = StringValidate.FieldType.EMAIL, fieldName = "Email")
+        @StringValidate(type = StringValidate.FieldType.EMAIL, fieldName = "email")
         String email,
-        @StringValidate(type = StringValidate.FieldType.PASSWORD, fieldName = "Password")
+        @StringValidate(type = StringValidate.FieldType.PASSWORD, fieldName = "password")
         String password) implements Serializable {
 }

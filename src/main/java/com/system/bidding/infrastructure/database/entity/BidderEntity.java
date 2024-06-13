@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * LinkedIn : https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1
+ * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
@@ -26,7 +26,7 @@ public class BidderEntity extends CommonEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "type")
+    @Column(name = "authorizationProvider")
     private BidderType type;
 
     @Column(name = "login_time")
@@ -43,7 +43,7 @@ public class BidderEntity extends CommonEntity implements Serializable {
 
     @Column(name = "authorization_type")
     @Enumerated(EnumType.STRING)
-    private SecurityConstant.AuthorizationType authorizationType;
+    private SecurityConstant.AuthorizationProvider authorizationProvider;
 
     @OneToOne
     @PrimaryKeyJoinColumn(name = "bidding_history_id")

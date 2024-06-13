@@ -6,24 +6,25 @@ import com.system.bidding.infrastructure.web.response.record.Announcement;
 import com.system.bidding.infrastructure.web.response.record.BiddingHistory;
 import com.system.bidding.infrastructure.web.response.record.Item;
 import com.system.bidding.infrastructure.web.response.record.ItemBiddingDetails;
-import com.system.bidding.ports.outgoing.BiddingService;
+import com.system.bidding.ports.outgoing.ItemService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
 /**
- * LinkedIn : https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1
+ * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
 @Slf4j
-//@Primary
+@Primary
 @Service
-public class BiddingServiceFileAdapter implements BiddingService {
+public class ItemServiceFileAdapter implements ItemService {
 
     /**
      * @param pageable : page request
@@ -41,14 +42,14 @@ public class BiddingServiceFileAdapter implements BiddingService {
     }
 
     /**
-     * @param clientId : clientId's parameter
+     * @param userId   : security principal
      * @param pageable : pageable's parameter
      * @return List of item
      */
     @Override
     @SneakyThrows
     public PagedListHolder<Item> getItemList(
-            final Long clientId,
+            final Long userId,
             final Pageable pageable) {
 
         final var listHolder = new PagedListHolder<Item>();
@@ -65,14 +66,14 @@ public class BiddingServiceFileAdapter implements BiddingService {
     }
 
     /**
-     * @param bidderId     :Bidder's ID
+     * @param userId       : security principal
      * @param requestParam : page request
-     * @return Bidding history
+     * @return list of BiddingHistory
      */
     @Override
     @SneakyThrows
     public PagedListHolder<BiddingHistory> getBiddingHistory(
-            final Long bidderId,
+            final Long userId,
             final ItemParam requestParam) {
 
         final var listHolder = new PagedListHolder<BiddingHistory>();
@@ -80,11 +81,11 @@ public class BiddingServiceFileAdapter implements BiddingService {
         requestParam.isWon()
                 .ifPresentOrElse(aBoolean ->
                                 listHolder.setSource(data.stream()
-                                        .filter(history -> Objects.equals(history.bidder().id(), bidderId)
+                                        .filter(history -> Objects.equals(history.bidder().id(), 1)
                                                 && requestParam.isWon().get().equals(history.isWon())
                                         ).toList())
                         , () -> listHolder.setSource(data.stream()
-                                .filter(history -> Objects.equals(history.bidder().id(), bidderId))
+                                .filter(history -> Objects.equals(history.bidder().id(), 1))
                                 .toList())
                 );
         final var pageable = requestParam.createPageRequest();

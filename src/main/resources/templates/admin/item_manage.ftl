@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <link rel="icon" href="data:,">
         <title>Back-Office Page</title>
         <link rel="stylesheet" href="${'/css/common.css'}"/>
         <script type="application/javascript">
@@ -84,7 +85,7 @@
         <div class="content">
             <nobr>
                 <a href="${'/view/v1/dashboard'}" class="navigation">Dashboard</a> |
-                <button class="navigation" onclick="toggleAddAction();">Add Item</button>
+                <button class="navigation" style="font-size: inherit;cursor: pointer" onclick="toggleAddAction();">Add Item</button>
             </nobr>
             <br/><br/>
             <table class="item_list">

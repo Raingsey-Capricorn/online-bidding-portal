@@ -1,9 +1,10 @@
-package com.system.bidding.infrastructure.config.security.service;
+package com.system.bidding.infrastructure.config.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -14,12 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * LinkedIn : https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1
+ * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
+@Slf4j
 @Component
-public class AuthenticationFailureHandlerService implements AuthenticationFailureHandler {
+public class FailureHandler implements AuthenticationFailureHandler {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -37,6 +39,8 @@ public class AuthenticationFailureHandlerService implements AuthenticationFailur
             final org.springframework.security.core.AuthenticationException exception)
             throws IOException, ServletException {
 
+        log.error("!!! Authentication error : {}", exception.getMessage());
+        request.getSession().setAttribute("error.message", exception.getMessage());
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         Map<String, Object> data = new HashMap<>();
         data.put("timestamp", Calendar.getInstance().getTime());

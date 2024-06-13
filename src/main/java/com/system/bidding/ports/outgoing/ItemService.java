@@ -9,11 +9,12 @@ import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Pageable;
 
 /**
- * LinkedIn : https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1
+ * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
+ * This service is for reading resource only
  */
-public interface BiddingService {
+public interface ItemService {
 
     /**
      * @param pageable : page request
@@ -22,21 +23,21 @@ public interface BiddingService {
     PagedListHolder<Item> getItemList(final Pageable pageable);
 
     /**
-     * @param clientId : clientId's parameter
+     * @param userId   : security principal
      * @param pageable : pageable's parameter
      * @return Page of data
      */
     PagedListHolder<Item> getItemList(
-            final Long clientId,
+            final Long userId,
             final Pageable pageable);
 
     /**
-     * @param bidderId     :Bidder's ID
+     * @param userId       : security principal
      * @param requestParam : page request
      * @return Page of data
      */
     PagedListHolder<BiddingHistory> getBiddingHistory(
-            final Long bidderId,
+            final Long userId,
             final ItemParam requestParam);
 
     /**

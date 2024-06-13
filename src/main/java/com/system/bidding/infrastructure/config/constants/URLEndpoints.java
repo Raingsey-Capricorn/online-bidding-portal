@@ -1,7 +1,7 @@
 package com.system.bidding.infrastructure.config.constants;
 
 /**
- * LinkedIn : https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1
+ * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
@@ -12,8 +12,15 @@ public abstract class URLEndpoints {
     public static final String BASE_API_URL                     = "/api/" + API_VERSION;
     public static final String AUTH_API_URL                     = BASE_API_URL + "/auth";
     public static final String OAUTH2_API_URL                   = BASE_API_URL + "/oauth2";
-    public static final String AUTH_API_SIGN_UP_URL             = "/sign-up";
-    public static final String AUTH_API_SIGN_IN_URL             = "/sign-in";
+    public static final String API_SIGN_UP_URL                  = "/sign-up";
+    public static final String API_SIGN_IN_URL                  = "/sign-in";
+    public static final String VIEW_LOGIN_URL                   = "/login";
+    public static final String VIEW_LOGOUT_URL                  = "/logout";
+    public static final String BASE_VIEW_LOGIN_URL              = URLEndpoints.BASE_VIEW_URL + "/login";
+    public static final String AUTH_API_SIGN_UP_URL             = URLEndpoints.AUTH_API_URL+"/sign-up";
+    public static final String AUTH_API_SIGN_IN_URL             = URLEndpoints.AUTH_API_URL + "/sign-in";
+    public static final String OAUTH2_API_SIGN_UP_URL           = URLEndpoints.OAUTH2_API_URL + "/sign-up";
+    public static final String OAUTH2_API_SIGN_IN_URL           = URLEndpoints.OAUTH2_API_URL + "/sign-in";
 
     public static final String BASE_VIEW_URL                    = "/view/" + API_VERSION;
     public static final String DASHBOARD_URL                    = "/dashboard";
@@ -31,4 +38,14 @@ public abstract class URLEndpoints {
     public static final String BIDDING_POST_VIEW_URL            = "/bid";
     public static final String BIDDING_ANNOUNCEMENT_URL         = "/announcement";
 
+    public static final String[] EXCLUDE_URI = {
+            "/configuration/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger*/**",
+            "/api/auth/**",
+            "/webjars/**",
+            "/css/**",
+            "/img/**"
+    };
 }

@@ -1,17 +1,20 @@
 package com.system.bidding.ports.incoming.adapter.api;
 
 import com.system.bidding.infrastructure.config.constants.URLEndpoints;
-import com.system.bidding.infrastructure.config.security.service.AuthenticationService;
+import com.system.bidding.infrastructure.config.security.response.SSUserResponse;
+import com.system.bidding.infrastructure.config.security.service.UserDetailsService;
 import com.system.bidding.infrastructure.web.request.SignInParam;
 import com.system.bidding.infrastructure.web.request.SignUpParam;
-import com.system.bidding.infrastructure.web.response.JwtAuthenticationResponse;
-import com.system.bidding.ports.incoming.AuthenticationController;
+import com.system.bidding.ports.incoming.AuthenticationRestController;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,29 +30,45 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping(URLEndpoints.AUTH_API_URL)
 public class SpringAuthHttpAdapter
-        implements AuthenticationController<ResponseEntity<JwtAuthenticationResponse>> {
+        implements AuthenticationRestController<ResponseEntity<SSUserResponse>> {
 
-    private final AuthenticationService authenticationService;
+    private final UserDetailsService service;
 
     /**
-     * @param request : up-signing request
+     * @param signUpParam : request's parameter
+     * @param response    : response's parameter
      * @return
      */
     @Override
-    @PostMapping(URLEndpoints.AUTH_API_SIGN_UP_URL)
-    public ResponseEntity<JwtAuthenticationResponse> signUp(@RequestBody SignUpParam request) {
-        log.info(">>>> Request signing up a new user: {}", request.email());
-        return ResponseEntity.ok(authenticationService.signUp(request));
+    @SneakyThrows
+    @PostMapping(value = URLEndpoints.API_SIGN_UP_URL,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<SSUserResponse> signUp(
+            final SignUpParam signUpParam,
+            final HttpServletRequest request,
+            final HttpServletResponse response) {
+
+        log.info(">>>> Request signing up a new user: {}", signUpParam.email());
+        return ResponseEntity.ok(service.signUp(request, signUpParam));
     }
 
     /**
-     * @param request : in-singing request
+     * @param signInParam : request's parameter
+     * @param response    : response's parameter
      * @return
      */
     @Override
-    @PostMapping(URLEndpoints.AUTH_API_SIGN_IN_URL)
-    public ResponseEntity<JwtAuthenticationResponse> signIn(@RequestBody SignInParam request) {
-        log.info(">>>> Request signing in existing user: {}", request.email());
-        return ResponseEntity.ok(authenticationService.signIn(request));
+    @SneakyThrows
+    @PostMapping(value = URLEndpoints.API_SIGN_IN_URL,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<SSUserResponse> signIn(
+            final SignInParam signInParam,
+            final HttpServletRequest request,
+            final HttpServletResponse response) {
+
+        log.info(">>>> Request signing in existing user: {}", signInParam.email());
+        return ResponseEntity.ok(service.signIn(request, signInParam));
     }
 }

@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <link rel="icon" href="data:,">
         <title>Bidding Page</title>
         <link rel="stylesheet" href="${'/css/common.css'}"/>
         <script type="application/javascript">
@@ -10,14 +11,14 @@
             });
 
             function selectAction(select) {
-                self.location = 'items?page=' + ${page} +
+                self.location = 'announcement?page=' + ${page} +
                     '&size=' + select.value +
                     '&sortField=maxBiddingPrice&sortDirection=DESC'
                 ;
             }
 
             function pagingAction(value) {
-                self.location = 'items?page=' + value +
+                self.location = 'announcement?page=' + value +
                     '&size=' + ${size} +
                     '&sortField=maxBiddingPrice&sortDirection=DESC'
                 ;

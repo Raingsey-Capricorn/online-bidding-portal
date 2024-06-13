@@ -7,15 +7,23 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- * LinkedIn : https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1
+ * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
+
     /**
-     * @param email
-     * @return
+     * @param email : email's parameter
+     * @return Optional<UserEntity> user data
      */
     Optional<UserEntity> findByEmail(String email);
+
+    /**
+     * @param userName : userName's parameter
+     * @return Optional<UserEntity> user data
+     */
+    Optional<UserEntity> findByUserName(String userName);
+
 }

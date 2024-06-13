@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * LinkedIn : https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1
+ * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
@@ -24,12 +24,13 @@ import java.util.List;
 @Accessors(chain = true)
 public class UserEntityModel implements User {
 
-    @Setter(AccessLevel.PRIVATE)
+    @Setter(AccessLevel.PUBLIC)
     private UserEntity user = new UserEntity();
 
     public UserEntityModel(UserEntity user) {
         this.user = user;
     }
+
 
     /**
      * @param role

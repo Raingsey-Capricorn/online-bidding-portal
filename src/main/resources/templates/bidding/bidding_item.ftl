@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <link rel="icon" href="data:,">
         <title>Bidding Page</title>
         <link rel="stylesheet" href="${'/css/common.css'}"/>
         <script type="application/javascript">

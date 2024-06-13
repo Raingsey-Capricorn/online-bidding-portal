@@ -8,28 +8,30 @@ import com.system.bidding.infrastructure.web.request.RequestPageableParam;
 import com.system.bidding.infrastructure.web.response.record.BiddingHistory;
 import com.system.bidding.infrastructure.web.response.record.Item;
 import com.system.bidding.infrastructure.web.response.record.ItemBiddingDetails;
-import com.system.bidding.ports.incoming.BiddingDataController;
-import com.system.bidding.ports.outgoing.BiddingService;
+import com.system.bidding.ports.incoming.BiddingRestController;
+import com.system.bidding.ports.outgoing.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
- * LinkedIn : https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1
+ * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
 @Slf4j
 @RestController
-@RequestMapping(URLEndpoints.BASE_API_URL)
 @RequiredArgsConstructor
-public class BiddingResourceHttpAdapter implements BiddingDataController {
+@RequestMapping(URLEndpoints.BASE_API_URL)
+@PreAuthorize(value = "hasAnyAuthority('ADMIN','SYSTEM','USER','ANONYMOUS')")
+public class BiddingResourceHttpAdapter implements BiddingRestController {
 
-    private final BiddingService biddingService;
+    private final ItemService itemService;
 
     @Override
     @GetMapping("/bidding")
@@ -47,7 +49,7 @@ public class BiddingResourceHttpAdapter implements BiddingDataController {
             final @ModelAttribute(name = "pageRequest") RequestPageableParam requestParam) {
 
         log.info("requestParam: {}", requestParam);
-        return ResponseEntity.ok(biddingService.getItemList(requestParam.createPageRequest()).getPageList());
+        return ResponseEntity.ok(itemService.getItemList(requestParam.createPageRequest()).getPageList());
     }
 
     /**
@@ -69,7 +71,7 @@ public class BiddingResourceHttpAdapter implements BiddingDataController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> bidItem(BiddingItemParam requestParam) {
-        
+
         log.error("Received request to save item {}", requestParam);
         return ResponseEntity.ok().build();
     }
@@ -87,8 +89,8 @@ public class BiddingResourceHttpAdapter implements BiddingDataController {
             final @ModelAttribute(name = "pageRequest") ItemParam requestParam) {
 
         log.info("Bidder info : ID : {}, requestParam: {}", bidderId, requestParam);
-        return ResponseEntity.ok(biddingService.getBiddingHistory(
-                        Long.parseLong(bidderId),
+        return ResponseEntity.ok(itemService.getBiddingHistory(
+                        null,
                         requestParam)
                 .getPageList()
         );
@@ -101,7 +103,7 @@ public class BiddingResourceHttpAdapter implements BiddingDataController {
             final @PathVariable(name = "id") String itemId) {
 
         log.info("itemId: {}", itemId);
-        return ResponseEntity.ok(biddingService.getItemDetails(Long.parseLong(itemId)));
+        return ResponseEntity.ok(itemService.getItemDetails(Long.parseLong(itemId)));
     }
 
 }
