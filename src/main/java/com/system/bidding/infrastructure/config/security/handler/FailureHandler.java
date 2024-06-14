@@ -1,7 +1,6 @@
 package com.system.bidding.infrastructure.config.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -29,15 +28,14 @@ public class FailureHandler implements AuthenticationFailureHandler {
      * @param request   : request's parameter
      * @param response  : response's parameter
      * @param exception : exception's parameter
-     * @throws IOException
-     * @throws ServletException
+     * @throws IOException : the exception which was thrown to reject the authentication request.
      */
     @Override
     public void onAuthenticationFailure(
             final HttpServletRequest request,
             final HttpServletResponse response,
             final org.springframework.security.core.AuthenticationException exception)
-            throws IOException, ServletException {
+            throws IOException {
 
         log.error("!!! Authentication error : {}", exception.getMessage());
         request.getSession().setAttribute("error.message", exception.getMessage());

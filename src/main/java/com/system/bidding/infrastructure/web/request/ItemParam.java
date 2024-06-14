@@ -1,6 +1,6 @@
 package com.system.bidding.infrastructure.web.request;
 
-import com.system.bidding.infrastructure.utilities.PageRequestCreator;
+import com.system.bidding.infrastructure.utilities.PageRequestBuilder;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +27,7 @@ public record ItemParam(
      * @return request parameter
      */
     public PageRequest createPageRequest() {
-        return PageRequestCreator.createPageRequest(
+        return PageRequestBuilder.build(
                 page.orElse(1),
                 size.orElse(5));
     }

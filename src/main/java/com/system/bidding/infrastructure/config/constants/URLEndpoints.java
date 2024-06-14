@@ -14,6 +14,7 @@ public abstract class URLEndpoints {
     public static final String OAUTH2_API_URL                   = BASE_API_URL + "/oauth2";
     public static final String API_SIGN_UP_URL                  = "/sign-up";
     public static final String API_SIGN_IN_URL                  = "/sign-in";
+    public static final String API_SIGN_OUT_URL                 = "/sign-out";
     public static final String VIEW_LOGIN_URL                   = "/login";
     public static final String VIEW_LOGOUT_URL                  = "/logout";
     public static final String BASE_VIEW_LOGIN_URL              = URLEndpoints.BASE_VIEW_URL + "/login";

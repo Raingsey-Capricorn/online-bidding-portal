@@ -18,7 +18,7 @@ public class OAuth2UserResponse implements OAuth2User {
     private final OAuth2User oAuth2User;
 
     /**
-     * @return
+     * @return oAuth2 instance's name
      */
     @Override
     public String getName() {
@@ -26,7 +26,7 @@ public class OAuth2UserResponse implements OAuth2User {
     }
 
     /**
-     * @return
+     * @return Map of attribute return from Authorization server
      */
     @Override
     public Map<String, Object> getAttributes() {
@@ -34,7 +34,7 @@ public class OAuth2UserResponse implements OAuth2User {
     }
 
     /**
-     * @return
+     * @return List of authorities return from Authorization server
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

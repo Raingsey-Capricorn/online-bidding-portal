@@ -2,7 +2,7 @@ package com.system.bidding.ports.incoming.adapter.api;
 
 import com.system.bidding.infrastructure.config.constants.URLEndpoints;
 import com.system.bidding.infrastructure.config.security.response.SSUserResponse;
-import com.system.bidding.infrastructure.config.security.service.UserDetailsService;
+import com.system.bidding.infrastructure.config.security.service.UserSigningService;
 import com.system.bidding.infrastructure.web.request.SignInParam;
 import com.system.bidding.infrastructure.web.request.SignUpParam;
 import com.system.bidding.ports.incoming.AuthenticationRestController;
@@ -14,9 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
 
 /**
  * Author  : pisethraringsey.suon
@@ -29,15 +31,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(URLEndpoints.AUTH_API_URL)
-public class SpringAuthHttpAdapter
+public class SigningHttpAdapter
         implements AuthenticationRestController<ResponseEntity<SSUserResponse>> {
 
-    private final UserDetailsService service;
+    private final UserSigningService service;
 
     /**
      * @param signUpParam : request's parameter
      * @param response    : response's parameter
-     * @return
+     * @return ResponseEntity<SSUserResponse> instance
      */
     @Override
     @SneakyThrows
@@ -56,7 +58,7 @@ public class SpringAuthHttpAdapter
     /**
      * @param signInParam : request's parameter
      * @param response    : response's parameter
-     * @return
+     * @return ResponseEntity<SSUserResponse> instance
      */
     @Override
     @SneakyThrows
@@ -70,5 +72,21 @@ public class SpringAuthHttpAdapter
 
         log.info(">>>> Request signing in existing user: {}", signInParam.email());
         return ResponseEntity.ok(service.signIn(request, signInParam));
+    }
+
+    /**
+     * @param request  : http-servlet-request
+     * @param response : http-servlet-response
+     * @return ResponseEntity<SSUserResponse> instance
+     */
+    @Override
+    @GetMapping(value = URLEndpoints.API_SIGN_OUT_URL)
+    public ResponseEntity<SSUserResponse> signOut(
+            final HttpServletRequest request,
+            final HttpServletResponse response) {
+
+        final var sessionId = RequestContextHolder.getRequestAttributes().getSessionId();
+        log.info(">>>> Request logged out of session: {}", sessionId);
+        return ResponseEntity.ok(service.signOut(request));
     }
 }

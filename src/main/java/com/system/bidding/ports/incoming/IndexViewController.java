@@ -32,6 +32,6 @@ public interface IndexViewController {
      * @param model : spring injected Model for data rendering
      * @return userItem view template
      */
-    String Itemview(final Model model, final ItemParam requestParam);
+    String ItemView(final Model model, final ItemParam requestParam);
 
 }

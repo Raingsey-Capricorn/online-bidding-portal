@@ -20,7 +20,7 @@ public class OidCUserResponse implements OidcUser {
     private final OidcUser oAuth2User;
 
     /**
-     * @return
+     * @return Map of claims
      */
     @Override
     public Map<String, Object> getClaims() {
@@ -28,7 +28,7 @@ public class OidCUserResponse implements OidcUser {
     }
 
     /**
-     * @return
+     * @return OidcUserInfo information
      */
     @Override
     public OidcUserInfo getUserInfo() {
@@ -36,7 +36,7 @@ public class OidCUserResponse implements OidcUser {
     }
 
     /**
-     * @return
+     * @return OidcIdToken's token
      */
     @Override
     public OidcIdToken getIdToken() {
@@ -44,7 +44,7 @@ public class OidCUserResponse implements OidcUser {
     }
 
     /**
-     * @return
+     * @return Map of attribute return from Authorization server
      */
     @Override
     public Map<String, Object> getAttributes() {
@@ -52,7 +52,7 @@ public class OidCUserResponse implements OidcUser {
     }
 
     /**
-     * @return
+     * @return List of authorities return from Authorization server
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,7 +60,7 @@ public class OidCUserResponse implements OidcUser {
     }
 
     /**
-     * @return
+     * @return oAuth2 instance's name
      */
     @Override
     public String getName() {

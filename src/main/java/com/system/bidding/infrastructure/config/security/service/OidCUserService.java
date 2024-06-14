@@ -2,7 +2,7 @@ package com.system.bidding.infrastructure.config.security.service;
 
 import com.system.bidding.infrastructure.config.security.response.OidCUserResponse;
 import com.system.bidding.infrastructure.mapstruct.UserMapper;
-import com.system.bidding.ports.outgoing.UserService;
+import com.system.bidding.ports.outgoing.UserModelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,19 +24,19 @@ import org.springframework.stereotype.Service;
 public class OidCUserService extends OidcUserService {
 
     private final UserMapper userMapper;
-    private final UserService userService;
+    private final UserModelService userModelService;
 
     /**
      * @param userRequest : userRequest
      * @return OpenID Connect instance (Google)
-     * @throws OAuth2AuthenticationException
+     * @throws OAuth2AuthenticationException : exception thrown by OAuth2Authentication
      */
     @Override
     public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
 
         final var user = super.loadUser(userRequest);
         log.info("OidcUserService: user = {}", user);
-        final var savedUser = userService.save(userMapper.from(user));
+        final var savedUser = userModelService.save(userMapper.from(user));
         final var context = SecurityContextHolder.createEmptyContext();
         final var authToken = new UsernamePasswordAuthenticationToken(
                 savedUser.getUser(),

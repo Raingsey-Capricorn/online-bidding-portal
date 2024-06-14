@@ -17,18 +17,7 @@ public final class SecurityConstant {
     /**
      *
      */
-    public static abstract class Authority {
-        public static final String ROLE_PREFIX = "ROLE_";
-        public static final String ROLE_ADMIN = "ADMIN";
-        public static final String ROLE_USER = "USER";
-        public static final String ANONYMOUS = "ANONYMOUS";
-        public static final String SYSTEM_USER = "SYSTEM";
-    }
-
-    /**
-     *
-     */
-    public enum AuthorizationRole {
+    public enum Authority {
         /**
          * Role as user
          */
@@ -49,7 +38,7 @@ public final class SecurityConstant {
         /**
          * @return list of enumerated roles
          */
-        public static List<AuthorizationRole> list() {
+        public static List<Authority> list() {
             return Arrays.asList(USER, ADMIN, SYSTEM, ANONYMOUS);
         }
     }

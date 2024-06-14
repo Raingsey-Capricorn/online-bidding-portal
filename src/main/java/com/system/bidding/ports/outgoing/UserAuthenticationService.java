@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 
-public interface UserRegistrationService<T> {
+public interface UserAuthenticationService<T> {
 
     /**
      * @param request     : http servlet request
@@ -26,4 +26,10 @@ public interface UserRegistrationService<T> {
      */
     T signIn(final HttpServletRequest request,
              final SignInParam signInParam);
+
+    /**
+     * @param request : http-servlet-request
+     * @return Authentication Response's instance
+     */
+    T signOut(final HttpServletRequest request);
 }

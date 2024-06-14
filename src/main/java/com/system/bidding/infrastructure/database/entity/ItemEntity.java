@@ -54,4 +54,5 @@ public class ItemEntity extends CommonEntity implements Serializable {
 
     @OneToMany(mappedBy = "itemEntity")
     private List<BiddingHistoryEntity> biddingHistories;
+
 }

@@ -6,7 +6,7 @@ import com.system.bidding.infrastructure.config.security.handler.FailureHandler;
 import com.system.bidding.infrastructure.config.security.handler.SuccessHandler;
 import com.system.bidding.infrastructure.config.security.service.OAuth2UserService;
 import com.system.bidding.infrastructure.config.security.service.OidCUserService;
-import com.system.bidding.ports.outgoing.UserService;
+import com.system.bidding.ports.outgoing.UserModelService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -35,12 +35,12 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class SecurityConfiguration {
 
     public final static String DEFAULTED_SUCCESS_URL = URLEndpoints.BASE_VIEW_URL + URLEndpoints.DASHBOARD_URL;
-    private final RequestFilter authenticationFilter;
     private final OAuth2UserService oAuth2UserService;
+    private final RequestFilter authenticationFilter;
+    private final UserModelService userModelService;
     private final OidCUserService oidcUserService;
     private final SuccessHandler successHandler;
     private final FailureHandler failureHandler;
-    private final UserService userService;
 
     /**
      * @param httpSecurity : spring argument http-security param
@@ -88,7 +88,7 @@ public class SecurityConfiguration {
     /**
      * @param config : authentication param
      * @return AuthenticationManager instance
-     * @throws Exception
+     * @throws Exception : exception thrown by Authentication server
      */
     @Bean
     public AuthenticationManager authenticationManager(
@@ -103,7 +103,7 @@ public class SecurityConfiguration {
     public AuthenticationProvider authenticationProvider() {
         final var auth = new DaoAuthenticationProvider();
         auth.setPasswordEncoder(passwordEncoder());
-        auth.setUserDetailsService(userService);
+        auth.setUserDetailsService(userModelService);
         return auth;
     }
 

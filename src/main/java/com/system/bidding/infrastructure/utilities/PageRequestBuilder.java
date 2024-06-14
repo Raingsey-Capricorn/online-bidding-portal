@@ -8,14 +8,14 @@ import org.springframework.data.domain.Sort;
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
-public abstract class PageRequestCreator {
+public abstract class PageRequestBuilder {
 
     /**
      * @param page : current page
      * @param size : current records to fetch
      * @return PageRequest object
      */
-    public static PageRequest createPageRequest(int page, int size) {
+    public static PageRequest build(int page, int size) {
         return PageRequest.of(
                 page,
                 size,

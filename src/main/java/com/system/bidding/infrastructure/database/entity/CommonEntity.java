@@ -1,12 +1,12 @@
 package com.system.bidding.infrastructure.database.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
@@ -61,4 +61,21 @@ public abstract class CommonEntity {
     @Column(name = "remark")
     private String remark;
 
+    @PrePersist
+    @PreUpdate
+    @PreRemove
+    private void prePersist() {
+        if (!Objects.isNull(getCreatedBy())
+                && Objects.isNull(getCreatedDate())
+        ) {
+            setCreatedDate(new Date());
+            setStatus(true);
+        }
+        if (!Objects.isNull(getUpdatedBy()) && Objects.isNull(getUpdatedDate())) {
+            setUpdatedDate(new Date());
+        }
+        if (!Objects.isNull(getIsEnabled()) && Boolean.compare(getIsEnabled(), true) == 0) {
+            setDisabledDate(new Date());
+        }
+    }
 }

@@ -23,7 +23,7 @@ public class SSUserResponse implements AuthenticatedPrincipal {
     private final UserEntityModel model;
 
     /**
-     * @return
+     * @return oAuth2 instance's name
      */
     @Override
     public String getName() {
@@ -31,15 +31,16 @@ public class SSUserResponse implements AuthenticatedPrincipal {
     }
 
     /**
-     * @return
+     * @return Map of attribute return from local Authorization server
      */
     public Map<String, Object> getAttributes() {
         model.getUser().setPassword(null);
-        return new ObjectMapper().convertValue(model, new TypeReference<>() {});
+        return new ObjectMapper().convertValue(model, new TypeReference<>() {
+        });
     }
 
     /**
-     * @return
+     * @return List of authorities return from local Authorization server
      */
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return model.getAuthorities();

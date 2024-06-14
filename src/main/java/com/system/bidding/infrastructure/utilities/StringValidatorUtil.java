@@ -14,34 +14,34 @@ import java.util.regex.Pattern;
 public class StringValidatorUtil {
 
     /**
-     * @param value
-     * @return
+     * @param text : String text to test
+     * @return true for emptiness
      */
-    public static boolean isEmpty(String value) {
-        return Objects.isNull(value) || value.isEmpty();
+    public static boolean isEmpty(String text) {
+        return Objects.isNull(text) || text.isEmpty();
     }
 
     /**
-     * @param value
-     * @return
+     * @param text : String text to test
+     * @return true : containing reserved word
      */
     @SneakyThrows
-    public static boolean isContainingReservedWord(String value) {
+    public static boolean isContainingReservedWord(String text) {
 
         final JsonLoader.Keyword keyword = new ObjectMapper()
                 .readValue(JsonLoader.Keyword.class.getResourceAsStream("/json/reserve-words.json")
                         , JsonLoader.Keyword.class
                 );
-        return keyword.getJavaKeywords().contains(value) ||
-                keyword.getSqlKeywords().contains(value.toUpperCase());
+        return keyword.getJavaKeywords().contains(text) ||
+                keyword.getSqlKeywords().contains(text.toUpperCase());
     }
 
     /**
-     * @param value
-     * @return
+     * @param text : String value to test
+     * @return true : containing emoji
      */
-    public static boolean isContainingEmoji(String value) {
-        return value.chars()
+    public static boolean isContainingEmoji(String text) {
+        return text.chars()
                 .mapToObj(c -> (char) c)
                 .toList()
                 .stream()
@@ -49,8 +49,8 @@ public class StringValidatorUtil {
     }
 
     /**
-     * @param text
-     * @return true - for
+     * @param text : String value to test
+     * @return true : is containing special symbol exist
      */
     public static boolean isContainingSpecialSymbol(String text) {
         return !Pattern.compile("^([a-zA-Z0-9.\\s_-])*$").matcher(text).find();
@@ -61,7 +61,7 @@ public class StringValidatorUtil {
     }
 
     /**
-     * @param text
+     * @param text : String value to test
      * @return true - for valid email, false - for none email pattern
      */
     public static boolean isInValidEmailPattern(String text) {
@@ -71,8 +71,8 @@ public class StringValidatorUtil {
     /**
      * a
      *
-     * @param codePoint
-     * @return
+     * @param codePoint character codepoint
+     * @return true : is emoji exist
      */
     private static boolean isEmojiCharacter(char codePoint) {
         return !(codePoint == 0x0

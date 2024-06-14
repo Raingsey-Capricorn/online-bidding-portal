@@ -1,11 +1,12 @@
 package com.system.bidding.infrastructure.config.security.service;
 
+import com.system.bidding.domain.business.UserEntityModel;
 import com.system.bidding.infrastructure.config.security.response.SSUserResponse;
 import com.system.bidding.infrastructure.mapstruct.UserMapper;
 import com.system.bidding.infrastructure.web.request.SignInParam;
 import com.system.bidding.infrastructure.web.request.SignUpParam;
-import com.system.bidding.ports.outgoing.UserRegistrationService;
-import com.system.bidding.ports.outgoing.UserService;
+import com.system.bidding.ports.outgoing.UserAuthenticationService;
+import com.system.bidding.ports.outgoing.UserModelService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -27,12 +30,12 @@ import java.util.Optional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class UserDetailsService
-        implements UserRegistrationService<SSUserResponse> {
+public class UserSigningService
+        implements UserAuthenticationService<SSUserResponse> {
 
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-    private final UserService userService;
+    private final UserModelService userModelService;
     private final UserMapper userMapper;
 
     /**
@@ -40,10 +43,11 @@ public class UserDetailsService
      * @return UserModelResponse instance
      * @see SignUpParam#SignUpParam(String, String, String, String, Optional, Optional, Optional)
      */
-    public SSUserResponse signUp(final HttpServletRequest request,
-                                 final SignUpParam signUpParam) {
+    public SSUserResponse signUp(
+            final HttpServletRequest request,
+            final SignUpParam signUpParam) {
 
-        final var savedUser = userService.save(userMapper.from(signUpParam, passwordEncoder));
+        final var savedUser = userModelService.save(userMapper.from(signUpParam, passwordEncoder));
         final var session = request.getSession(true);
         final var authenticatedUser = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -65,8 +69,9 @@ public class UserDetailsService
      * @return UserModelResponse instance
      * @see SignUpParam#SignUpParam(String, String, String, String, Optional, Optional, Optional)
      */
-    public SSUserResponse signIn(final HttpServletRequest request,
-                                 final SignInParam signInParam) throws UsernameNotFoundException {
+    public SSUserResponse signIn(
+            final HttpServletRequest request,
+            final SignInParam signInParam) throws UsernameNotFoundException {
 
         final var session = request.getSession(true);
         final var authenticatedUser = authenticationManager.authenticate(
@@ -80,7 +85,22 @@ public class UserDetailsService
                 context);
 
         return SSUserResponse.builder()
-                .model(userService.findUserByUserName(signInParam.email()))
+                .model(userModelService.findUserByUserName(signInParam.email()))
+                .build();
+    }
+
+    /**
+     * @param request : http-servlet-request
+     * @return Authentication Response's instance
+     */
+    @Override
+    public SSUserResponse signOut(final HttpServletRequest request) {
+
+        (Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getSessionId();
+        final var session = request.getSession(true);
+        session.removeAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+        return SSUserResponse.builder()
+                .model(new UserEntityModel())
                 .build();
     }
 }

@@ -5,7 +5,7 @@ import com.system.bidding.infrastructure.config.constants.SecurityConstant;
 import com.system.bidding.infrastructure.config.security.response.OAuth2UserResponse;
 import com.system.bidding.infrastructure.config.security.response.OidCUserResponse;
 import com.system.bidding.infrastructure.web.request.SignUpParam;
-import com.system.bidding.ports.outgoing.UserService;
+import com.system.bidding.ports.outgoing.UserModelService;
 import org.mapstruct.Mapper;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,20 +27,20 @@ public interface UserMapper {
 
     /**
      * @param securityContext : security context
-     * @param userService     : user service
+     * @param userModelService     : user service
      * @return User'ID as Long
      */
     default Long mapUserId(
             final SecurityContext securityContext,
-            final UserService userService) {
+            final UserModelService userModelService) {
 
         final var principal = securityContext.getAuthentication().getPrincipal();
         if (principal instanceof OidcUser) {
             final var name = ((OidCUserResponse) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getClaims().get("name");
-            return ((UserEntityModel) userService.loadUserByUsername(name.toString())).getUser().getId();
+            return ((UserEntityModel) userModelService.loadUserByUsername(name.toString())).getUser().getId();
         } else if (principal instanceof OAuth2User) {
             final var name = ((OAuth2UserResponse) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAttribute("name");
-            return ((UserEntityModel) userService.loadUserByUsername(name.toString())).getUser().getId();
+            return ((UserEntityModel) userModelService.loadUserByUsername(name.toString())).getUser().getId();
         } else if (principal instanceof UserEntityModel) {
             return ((UserEntityModel) principal).getUser().getId();
         }
@@ -59,7 +59,7 @@ public interface UserMapper {
         model.setFirstName(Optional.ofNullable(attributes.get("name")).orElse("").toString())
                 .setLastName(Optional.ofNullable(attributes.get("name")).orElse("").toString())
                 .setEmail(Optional.ofNullable(attributes.get("email")).orElse("").toString())
-                .setRole(SecurityConstant.AuthorizationRole.ANONYMOUS);
+                .setRole(SecurityConstant.Authority.ANONYMOUS);
         model.getUser().setProvider(SecurityConstant.AuthorizationProvider.GIT_HUB);
         model.getUser().setCreatedBy(Optional.ofNullable(attributes.get("name")).orElse("").toString());
         model.getUser().setUserName(Optional.ofNullable(attributes.get("name")).orElse("").toString());
@@ -77,7 +77,7 @@ public interface UserMapper {
         model.setFirstName(Optional.ofNullable(attributes.get("family_name")).orElse("").toString())
                 .setLastName(Optional.ofNullable(attributes.get("given_name")).orElse("").toString())
                 .setEmail(Optional.ofNullable(attributes.get("email")).orElse("").toString())
-                .setRole(SecurityConstant.AuthorizationRole.ANONYMOUS);
+                .setRole(SecurityConstant.Authority.ANONYMOUS);
         model.getUser().setProvider(SecurityConstant.AuthorizationProvider.GOOGLE);
         model.getUser().setCreatedBy(Optional.ofNullable(attributes.get("name")).orElse("").toString());
         model.getUser().setUserName(Optional.ofNullable(attributes.get("name")).orElse("").toString());
@@ -98,7 +98,7 @@ public interface UserMapper {
                 .setLastName(signUpParam.lastName())
                 .setEmail(signUpParam.email())
                 .setPassword(passwordEncoder.encode(signUpParam.password().get()))
-                .setRole(SecurityConstant.AuthorizationRole.valueOf(signUpParam.role().get().name()));
+                .setRole(SecurityConstant.Authority.valueOf(signUpParam.role().get().name()));
         user.getUser().setProvider(SecurityConstant.AuthorizationProvider.SSUP);
         user.getUser().setCreatedBy(signUpParam.userName());
         user.getUser().setUserName(signUpParam.email());

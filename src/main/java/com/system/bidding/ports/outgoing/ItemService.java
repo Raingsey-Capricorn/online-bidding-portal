@@ -41,15 +41,15 @@ public interface ItemService {
             final ItemParam requestParam);
 
     /**
-     * @param itemId : Item's ID
-     * @return Item detials
-     */
-    ItemBiddingDetails getItemDetails(final Long itemId);
-
-    /**
      * @param pageable : pageable's parameter
      * @return list of announcement
      */
     PagedListHolder<Announcement> getAnnouncements(final Pageable pageable);
+
+    /**
+     * @param itemId : Item's ID
+     * @return Item detials
+     */
+    ItemBiddingDetails getItemDetails(final Long itemId);
 
 }

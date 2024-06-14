@@ -29,10 +29,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(URLEndpoints.BASE_API_URL)
 @PreAuthorize(value = "hasAnyAuthority('ADMIN','SYSTEM','USER','ANONYMOUS')")
-public class BiddingResourceHttpAdapter implements BiddingRestController {
+public class BiddingHttpAdapter implements BiddingRestController {
 
     private final ItemService itemService;
 
+    /**
+     * @return
+     */
     @Override
     @GetMapping("/bidding")
     public ResponseEntity<String> message() {
@@ -66,6 +69,10 @@ public class BiddingResourceHttpAdapter implements BiddingRestController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * @param requestParam :bidding item request parameter
+     * @return
+     */
     @Override
     @PostMapping(value = URLEndpoints.BIDDING_URL + "/bid",
             produces = MediaType.APPLICATION_JSON_VALUE,
@@ -96,6 +103,10 @@ public class BiddingResourceHttpAdapter implements BiddingRestController {
         );
     }
 
+    /**
+     * @param itemId : Bidder Id
+     * @return
+     */
     @Override
     @GetMapping(value = URLEndpoints.BASE_ITEM_URL + "/{id}/details",
             produces = MediaType.APPLICATION_JSON_VALUE)

@@ -26,8 +26,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
      * @param request        : request from Auth provider
      * @param response       : response for redirect URL
      * @param authentication : authentication info
-     * @throws IOException
-     * @throws ServletException
+     * @throws IOException the exception which was thrown to reject the authentication request.
      */
     @Override
     public void onAuthenticationSuccess(

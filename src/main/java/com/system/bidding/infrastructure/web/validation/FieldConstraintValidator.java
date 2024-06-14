@@ -6,6 +6,11 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.SneakyThrows;
 
+/**
+ * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
+ * Owner   : pisethraingsey@yahoo.com
+ * Project : BiddingSystem
+ */
 public class FieldConstraintValidator implements ConstraintValidator<StringValidate, String> {
 
     private StringValidate annotation;
@@ -17,7 +22,7 @@ public class FieldConstraintValidator implements ConstraintValidator<StringValid
     private static final String MESSAGE_SPECIAL_CHARACTER = "contain special character";
 
     /**
-     * @param constraintAnnotation
+     * @param constraintAnnotation : annotation's name
      */
     @Override
     public void initialize(StringValidate constraintAnnotation) {

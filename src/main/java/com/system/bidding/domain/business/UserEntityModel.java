@@ -36,7 +36,7 @@ public class UserEntityModel implements User {
      * @param role
      * @return
      */
-    public UserEntityModel setRole(SecurityConstant.AuthorizationRole role) {
+    public UserEntityModel setRole(SecurityConstant.Authority role) {
         this.user.setRole(role);
         return this;
     }

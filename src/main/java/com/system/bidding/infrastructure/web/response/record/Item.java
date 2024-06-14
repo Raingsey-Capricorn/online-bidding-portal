@@ -8,6 +8,17 @@ import java.util.Date;
  * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
+ *
+ * @param id:              id's param
+ * @param name:            name's param
+ * @param description:     description's param
+ * @param clientId:        clientId's param
+ * @param availability:    availability's param
+ * @param price:           price's param
+ * @param minBiddingPrice: minBiddingPrice's param
+ * @param maxBiddingPrice: maxBiddingPrice's param
+ * @param entryDate:       entryDate's param
+ * @param expiryDate:      expiryDate's param
  */
 public record Item(
         Long id,

@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
-public interface UserService extends UserDetailsService {
+public interface UserModelService extends UserDetailsService {
 
     /**
      * @param entityModel : entity model parameter

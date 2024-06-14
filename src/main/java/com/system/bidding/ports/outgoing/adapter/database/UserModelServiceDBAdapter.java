@@ -4,7 +4,7 @@ import com.system.bidding.domain.business.UserEntityModel;
 import com.system.bidding.infrastructure.config.constants.SecurityConstant;
 import com.system.bidding.infrastructure.database.entity.UserEntity;
 import com.system.bidding.infrastructure.database.repository.UserRepository;
-import com.system.bidding.ports.outgoing.UserService;
+import com.system.bidding.ports.outgoing.UserModelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserServiceDBAdapter implements UserService {
+public class UserModelServiceDBAdapter implements UserModelService {
 
     private final UserRepository repository;
 
@@ -58,7 +58,7 @@ public class UserServiceDBAdapter implements UserService {
         final var user = new UserEntity();
         user.setUserName(nameOrEmail);
         user.setEmail(nameOrEmail);
-        user.setRole(SecurityConstant.AuthorizationRole.ANONYMOUS);
+        user.setRole(SecurityConstant.Authority.ANONYMOUS);
         return repository.findBy(Example.of(user), FluentQuery.FetchableFluentQuery::first)
                 .map(UserEntityModel::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));

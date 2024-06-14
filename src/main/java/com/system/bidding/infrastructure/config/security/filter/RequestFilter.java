@@ -1,7 +1,7 @@
 package com.system.bidding.infrastructure.config.security.filter;
 
 import com.system.bidding.infrastructure.config.constants.URLEndpoints;
-import com.system.bidding.ports.outgoing.UserService;
+import com.system.bidding.ports.outgoing.UserModelService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +24,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class RequestFilter extends OncePerRequestFilter {
 
-    private final UserService userService;
+    private final UserModelService userModelService;
 
 
     /**

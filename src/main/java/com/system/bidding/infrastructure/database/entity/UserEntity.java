@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
 
 /**
  * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
@@ -42,28 +40,10 @@ public class UserEntity extends CommonEntity implements Serializable {
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private SecurityConstant.AuthorizationRole role;
+    private SecurityConstant.Authority role;
 
     @Column(name = "provider")
     @Enumerated(EnumType.STRING)
     private SecurityConstant.AuthorizationProvider provider;
 
-    @PrePersist
-    @PreUpdate
-    @PreRemove
-    private void prePersist() {
-        if (!Objects.isNull(getCreatedBy())
-                && Objects.isNull(getCreatedDate())
-        ) {
-            setCreatedDate(new Date());
-            setStatus(true);
-        }
-        if (!Objects.isNull(getUpdatedBy()) && Objects.isNull(getUpdatedDate())) {
-            setUpdatedBy(getUserName());
-            setUpdatedDate(new Date());
-        }
-        if (!Objects.isNull(getIsEnabled()) && Boolean.compare(getIsEnabled(), true) == 0) {
-            setDisabledDate(new Date());
-        }
-    }
 }

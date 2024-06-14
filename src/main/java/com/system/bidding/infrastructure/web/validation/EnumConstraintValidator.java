@@ -16,17 +16,17 @@ import lombok.extern.slf4j.Slf4j;
 public class EnumConstraintValidator implements ConstraintValidator<EnumValidate, Enum<?>> {
 
     /**
-     * @param anEnum
-     * @param constraintValidatorContext
-     * @return
+     * @param anEnum                     : enumeration type
+     * @param constraintValidatorContext : validation context
+     * @return Exception when incompatible type is passing to the method
      */
     @Override
     @SneakyThrows
     public boolean isValid(Enum anEnum, ConstraintValidatorContext constraintValidatorContext) {
 
         if (anEnum.describeConstable().isPresent() && anEnum.getDeclaringClass().isEnum()) {
-            return SecurityConstant.AuthorizationRole.list()
-                    .contains(SecurityConstant.AuthorizationRole.valueOf(anEnum.name()));
+            return SecurityConstant.Authority.list()
+                    .contains(SecurityConstant.Authority.valueOf(anEnum.name()));
         }
         return true;
 

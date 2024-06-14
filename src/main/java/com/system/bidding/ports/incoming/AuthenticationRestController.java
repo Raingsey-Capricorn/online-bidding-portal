@@ -18,7 +18,7 @@ public interface AuthenticationRestController<T> {
      * @param signUpParam : up-signing request
      * @param request     : http-servlet-request
      * @param response    : http-servlet-response
-     * @return JwtAuthenticationResponse's instance
+     * @return Authentication Response's instance
      * @see SignUpParam#SignUpParam(String, String, String, String, Optional, Optional, Optional)
      */
     T signUp(final SignUpParam signUpParam,
@@ -29,10 +29,19 @@ public interface AuthenticationRestController<T> {
      * @param signInParam : in-signing request
      * @param request     : http-servlet-request
      * @param response    : http-servlet-response
-     * @return JwtAuthenticationResponse's instance
+     * @return Authentication Response's instance
      * @see SignInParam#SignInParam(String, String)
      */
     T signIn(final SignInParam signInParam,
              final HttpServletRequest request,
              final HttpServletResponse response);
+
+    /**
+     * @param request  : http-servlet-request
+     * @param response : http-servlet-response
+     * @return Authentication Response's instance
+     */
+    T signOut(
+            final HttpServletRequest request,
+            final HttpServletResponse response);
 }
