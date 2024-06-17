@@ -10,13 +10,13 @@
                 document.getElementById('displays').value = ${size};
             });
             function selectAction(select) {
-                self.location = 'items?page=' + ${page} +
+                self.location = 'history?page=' + ${page} +
                     '&size=' + select.value +
                     '&sortField=maxBiddingPrice&sortDirection=DESC'
                 ;
             }
             function pagingAction(value) {
-                self.location = 'items?page=' + value +
+                self.location = 'history?page=' + value +
                     '&size=' + ${size} +
                     '&sortField=maxBiddingPrice&sortDirection=DESC'
                 ;
@@ -28,7 +28,7 @@
         <div class="content">
             <nobr>
                 <a href="${'/view/v1/dashboard'}" class="navigation">Dashboard</a> |
-                <a href="${'/view/v1/bidding/items'}" class="navigation">Join Bidding</a>
+                <a href="${'/view/v1/bidding/board'}" class="navigation">Join Bidding</a>
             </nobr>
             <br/><br/>
             <table class="item_list">
@@ -61,16 +61,7 @@
                     </tr>
                 </#foreach>
             </table>
-            <div class="pagination">
-                <label for="displays">Page:</label>
-                <select id="displays" onchange="selectAction(this);">
-                    <#foreach display in displays>
-                        <option value=${display}>${display}</option>
-                    </#foreach>
-                </select>
-                <#if hasPrev><button onclick="pagingAction(${prev})" id="previous"/></#if>
-                <#if hasNext><button onclick="pagingAction(${next})" id="next"/></#if>
-            </div>
+            <#include "../pagination.ftl"/>
             <#include "../footer.ftl"/>
         </div>
     </body>

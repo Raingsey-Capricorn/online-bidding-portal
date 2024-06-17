@@ -30,6 +30,7 @@ public interface UserAuthenticationService<T> {
     /**
      * @param request : http-servlet-request
      * @return Authentication Response's instance
+     * @see HttpServletRequest
      */
     T signOut(final HttpServletRequest request);
 }

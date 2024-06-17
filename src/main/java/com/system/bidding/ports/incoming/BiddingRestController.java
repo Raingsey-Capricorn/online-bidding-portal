@@ -1,15 +1,16 @@
 package com.system.bidding.ports.incoming;
 
-import com.system.bidding.infrastructure.web.request.BiddingItemParam;
+import com.system.bidding.infrastructure.web.request.BiddenItemParam;
 import com.system.bidding.infrastructure.web.request.ItemParam;
-import com.system.bidding.infrastructure.web.request.RequestItemParam;
-import com.system.bidding.infrastructure.web.request.RequestPageableParam;
-import com.system.bidding.infrastructure.web.response.record.BiddingHistory;
+import com.system.bidding.infrastructure.web.response.record.BiddenItem;
+import com.system.bidding.infrastructure.web.response.record.BiddingSession;
 import com.system.bidding.infrastructure.web.response.record.Item;
-import com.system.bidding.infrastructure.web.response.record.ItemBiddingDetails;
+import com.system.bidding.infrastructure.web.response.record.ItemDetails;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
@@ -19,47 +20,32 @@ import java.util.List;
 public interface BiddingRestController {
 
     /**
-     * @return ResponseEntity as String
-     */
-    ResponseEntity<String> message();
-
-    /**
      * @param requestParam :
      * @return ResponseEntity as List of item
+     * @see ItemDetails#ItemDetails(Item, List, Date, Double, Double)
      */
-    ResponseEntity<List<Item>> getItems(
-            final RequestPageableParam requestParam);
+    ResponseEntity<List<BiddenItem>> getItems(
+            final ItemParam requestParam);
 
     /**
      * @param requestParam :bidding item request parameter
      * @return ResponseEntity as of an item
+     * @see BiddenItemParam#BiddenItemParam(Long, String, String, Double, Optional)
      */
-    ResponseEntity<?> addItem(
-            final RequestItemParam requestParam);
-
-    /**
-     * @param requestParam :bidding item request parameter
-     * @return ResponseEntity as of an item
-     */
-    ResponseEntity<?> bidItem(
-            final BiddingItemParam requestParam);
-
-    /**
-     * @param bidderId     : Bidder Id
-     * @param requestParam :bidding parameter containing bidder info and additional arguments
-     * @return List of items corresponding to the parameters
-     */
-    ResponseEntity<List<BiddingHistory>> biddingItems(
-            final String bidderId,
-            final ItemParam requestParam
-    );
+    ResponseEntity<?> applyBidding(
+            final BiddenItemParam requestParam);
 
     /**
      * @param itemId : Bidder Id
      * @return List of items corresponding to the parameters
      */
-    ResponseEntity<ItemBiddingDetails> itemDetails(
+    ResponseEntity<ItemDetails> itemDetails(
             final String itemId
     );
+
+    /**
+     * @return bidding session for current user
+     */
+    ResponseEntity<BiddingSession> biddingRequest();
 
 }

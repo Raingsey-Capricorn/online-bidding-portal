@@ -3,20 +3,21 @@ package com.system.bidding.infrastructure.web.response;
 import com.system.bidding.infrastructure.web.request.ItemParam;
 import com.system.bidding.infrastructure.web.request.RequestPageableParam;
 import com.system.bidding.infrastructure.web.response.record.Announcement;
-import com.system.bidding.infrastructure.web.response.record.BiddingHistory;
+import com.system.bidding.infrastructure.web.response.record.BiddenItem;
+import com.system.bidding.infrastructure.web.response.record.Bidder;
 import com.system.bidding.infrastructure.web.response.record.Item;
 import org.springframework.beans.support.PagedListHolder;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
-public abstract class PageableResponseModel {
+public abstract class PageableResponse {
 
+    public static final String TOTAL = "total";
     public static final String SIZE = "size";
     public static final String PAGE = "page";
     public static final String PREV = "prev";
@@ -32,6 +33,8 @@ public abstract class PageableResponseModel {
     /**
      * @param listHolder : list of data
      * @return map with pagination attribute
+     * @see ItemParam#ItemParam(Optional, Optional, Optional, Optional, Optional)
+     * @see RequestPageableParam#RequestPageableParam(Optional, Optional, Optional, Optional)
      */
     public static HashMap<String, ?> pagingItems(
             final RequestPageableParam param,
@@ -44,12 +47,31 @@ public abstract class PageableResponseModel {
     }
 
     /**
+     * @param pageableParam : pageableParam
+     * @param listHolder    : list holder
+     * @return HashMap<String, ?> map
+     * @see RequestPageableParam#RequestPageableParam(Optional, Optional, Optional, Optional)
+     * @see Item#Item(Long, String, Long, String, Boolean, Double, Double, Double, Date, Date)
+     */
+    public static HashMap<String, ?> pagingBiddingItems(
+            final RequestPageableParam pageableParam,
+            final PagedListHolder<Item> listHolder) {
+
+        return buildPaginationMap(
+                pageableParam.getSize().orElse(DEFAULT_SIZE),
+                pageableParam.getPage().orElse(DEFAULT_PAGE),
+                listHolder);
+    }
+
+    /**
      * @param listHolder : list of data
      * @return map with pagination attribute
+     * @see ItemParam#ItemParam(Optional, Optional, Optional, Optional, Optional)
+     * @see BiddenItem#BiddenItem(Item, Bidder, Boolean, Date, Double, Double)
      */
     public static HashMap<String, ?> pagingHistory(
             final ItemParam param,
-            final PagedListHolder<BiddingHistory> listHolder) {
+            final PagedListHolder<BiddenItem> listHolder) {
 
         return buildPaginationMap(
                 param.getSize().orElse(DEFAULT_SIZE),
@@ -60,6 +82,8 @@ public abstract class PageableResponseModel {
     /**
      * @param listHolder : list of data
      * @return map with pagination attribute
+     * @see RequestPageableParam#RequestPageableParam(Optional, Optional, Optional, Optional)
+     * @see Announcement#Announcement(Long, Item, Bidder, Date, String, Integer, Double, Double, Double)
      */
     public static HashMap<String, ?> pagingAnnouncement(
             final RequestPageableParam param,
@@ -87,10 +111,11 @@ public abstract class PageableResponseModel {
             put(PAGE, page);
             put(PREV, page - 1);
             put(NEXT, page + 1);
-            put(ITEMS, listHolder.getPageList());
+            put(ITEMS, Optional.of(listHolder.getPageList()).orElse(Collections.emptyList()));
             put(DISPLAYS, DEFAULT_RECORD_LIMIT);
             put(HAS_NEXT, !listHolder.isLastPage());
             put(HAS_PREV, !listHolder.isFirstPage());
+            put(TOTAL, listHolder.getSource().size());
         }};
     }
 

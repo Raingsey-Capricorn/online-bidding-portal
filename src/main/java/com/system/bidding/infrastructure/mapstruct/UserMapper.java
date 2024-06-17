@@ -26,8 +26,8 @@ import java.util.Optional;
 public interface UserMapper {
 
     /**
-     * @param securityContext : security context
-     * @param userModelService     : user service
+     * @param securityContext  : security context
+     * @param userModelService : user service
      * @return User'ID as Long
      */
     default Long mapUserId(
@@ -46,7 +46,6 @@ public interface UserMapper {
         }
         return 0L;
     }
-
 
     /**
      * @param oAuth2User : oAuth2User's parameter

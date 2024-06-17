@@ -35,7 +35,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
             final Authentication authentication) throws IOException, ServletException {
 
         request.getSession().setAttribute("success.message", authentication.getName());
-        log.info("Successfully authenticated user [{}] from provider [{}]",
+        log.info("<<<< Successfully authenticated user [{}] from provider [{}]",
                 ((OAuth2User) authentication.getPrincipal()).getAttribute("name"),
                 ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId().toUpperCase()
         );

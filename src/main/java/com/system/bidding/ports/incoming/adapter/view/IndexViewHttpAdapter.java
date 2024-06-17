@@ -1,11 +1,11 @@
 package com.system.bidding.ports.incoming.adapter.view;
 
-import com.system.bidding.domain.business.UserEntityModel;
-import com.system.bidding.infrastructure.config.constants.SecurityConstant;
 import com.system.bidding.infrastructure.config.constants.URLEndpoints;
 import com.system.bidding.infrastructure.mapstruct.UserMapper;
+import com.system.bidding.infrastructure.utilities.AuthenticationUtility;
 import com.system.bidding.infrastructure.web.request.ItemParam;
-import com.system.bidding.infrastructure.web.response.PageableResponseModel;
+import com.system.bidding.infrastructure.web.request.RequestPageableParam;
+import com.system.bidding.infrastructure.web.response.PageableResponse;
 import com.system.bidding.ports.incoming.IndexViewController;
 import com.system.bidding.ports.outgoing.ItemService;
 import com.system.bidding.ports.outgoing.UserModelService;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Objects;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -34,13 +34,14 @@ import java.util.Optional;
 @PreAuthorize(value = "hasAnyAuthority('ADMIN','SYSTEM','USER','ANONYMOUS')")
 public class IndexViewHttpAdapter implements IndexViewController {
 
-    private final ItemService itemService;
     private final UserModelService userModelService;
+    private final ItemService itemService;
     private final UserMapper userMapper;
 
     /**
      * @param model : spring injected Model for data rendering
      * @return login view template
+     * @see Model#addAllAttributes(Map)
      */
     @Override
     @GetMapping(URLEndpoints.VIEW_LOGIN_URL)
@@ -51,6 +52,7 @@ public class IndexViewHttpAdapter implements IndexViewController {
     /**
      * @param model : spring injected Model for data rendering
      * @return logout view template
+     * @see Model#addAllAttributes(Map)
      */
     @Override
     @GetMapping(URLEndpoints.VIEW_LOGOUT_URL)
@@ -61,39 +63,94 @@ public class IndexViewHttpAdapter implements IndexViewController {
     /**
      * @param model : spring injected Model for data rendering
      * @return dashboard view template
+     * @see Model#addAllAttributes(Map)
      */
     @Override
     @GetMapping(URLEndpoints.DASHBOARD_URL)
     public String dashboardView(final Model model) {
 
-        final var authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!Objects.isNull(authentication)) {
-            if (authentication.getPrincipal() instanceof UserEntityModel principal) {
-                Optional.of((principal).getAuthorities().stream().findFirst()).ifPresent(
-                        grantedAuthority -> {
-                            final var authority = grantedAuthority.get().getAuthority();
-                            model.addAttribute("isAdmin", SecurityConstant.Authority.ADMIN.name().equals(authority));
-                        });
-            }
-        }
+        model.addAllAttributes(AuthenticationUtility
+                .getUserRoleAndAccess(userModelService));
         return "dashboard";
     }
 
     /**
-     * @param model : spring injected Model for data rendering
-     * @return userItem view template
+     * @param model        : model for data rendering
+     * @param requestParam : request parameter
+     * @return bidding view
+     * @see Model#addAllAttributes(Map)
+     * @see RequestPageableParam#RequestPageableParam(Optional, Optional, Optional, Optional)
      */
     @Override
-    @GetMapping(URLEndpoints.BASE_ITEM_URL)
-    public String ItemView(
+    @GetMapping(value = URLEndpoints.BIDDING_ANNOUNCEMENT_URL)
+    public String announcementBoardView(
             final Model model,
-            final @ModelAttribute(name = "pageRequest") ItemParam requestParam) {
+            final @ModelAttribute(name = "requestParam") RequestPageableParam requestParam) {
 
-        final var securityContext = SecurityContextHolder.getContext();
-        final var listHolder = itemService.getBiddingHistory(userMapper.mapUserId(securityContext, userModelService), requestParam);
-        model.addAllAttributes(PageableResponseModel.pagingHistory(requestParam, listHolder));
-        model.addAttribute("title", "Landing Page");
-        return "admin/item_manage";
+        final var listHolder = itemService.getAnnouncements(requestParam.createPageRequest());
+        model.addAllAttributes(PageableResponse.pagingAnnouncement(requestParam, listHolder));
+        return "announcement";
+    }
+
+    /**
+     * @param model        : model for data rendering
+     * @param requestParam : request parameter
+     * @return bidding view
+     * @see Model#addAllAttributes(Map)
+     * @see RequestPageableParam#RequestPageableParam(Optional, Optional, Optional, Optional)
+     */
+    @Override
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
+    @GetMapping(URLEndpoints.BASE_ITEM_URL)
+    public String itemsView(
+            final Model model,
+            final @ModelAttribute(name = "requestParam") RequestPageableParam requestParam) {
+
+        final var context = SecurityContextHolder.getContext();
+        final var userId = userMapper.mapUserId(context, userModelService);
+        final var listHolder = itemService.getItemList(userId, requestParam.createPageRequest());
+        model.addAllAttributes(PageableResponse.pagingItems(requestParam, listHolder));
+        model.addAttribute("title", "Item Management");
+        return "management/item_manage";
+    }
+
+    /**
+     * @param model        : model for data rendering
+     * @param requestParam : request parameter
+     * @return bidding view
+     * @see Model#addAllAttributes(Map)
+     * @see ItemParam#ItemParam(Optional, Optional, Optional, Optional, Optional)
+     */
+    @Override
+    @GetMapping(URLEndpoints.BIDDING_HISTORY_VIEW_URL)
+    @PreAuthorize(value = "hasAnyAuthority('USER','ANONYMOUS')")
+    public String biddingItemHistoryView(
+            final Model model,
+            final @ModelAttribute(name = "requestParam") ItemParam requestParam) {
+
+        final var data = itemService.getItemBiddingHistory(requestParam.createPageRequest());
+        model.addAllAttributes(PageableResponse.pagingHistory(requestParam, data));
+        model.addAttribute("title", "Items History");
+        return "bidding/bidding_history";
+    }
+
+    /**
+     * @param model        : model for data rendering
+     * @param requestParam : request parameter
+     * @return bidding view
+     * @see Model#addAllAttributes(Map)
+     * @see RequestPageableParam#RequestPageableParam(Optional, Optional, Optional, Optional)
+     */
+    @Override
+    @GetMapping(URLEndpoints.BIDDING_BOARD_VIEW_URL)
+    @PreAuthorize(value = "hasAnyAuthority('USER','ANONYMOUS')")
+    public String biddingBoardView(
+            final Model model,
+            final @ModelAttribute(name = "requestParam") RequestPageableParam requestParam) {
+
+        final var listHolder = itemService.getBiddingItemBoardList(requestParam.createPageRequest());
+        model.addAllAttributes(PageableResponse.pagingItems(requestParam, listHolder));
+        return "bidding/bidding_board";
     }
 
 }

@@ -12,7 +12,7 @@ import java.util.Optional;
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
-public interface AuthenticationRestController<T> {
+public interface SigningRestController<T> {
 
     /**
      * @param signUpParam : up-signing request

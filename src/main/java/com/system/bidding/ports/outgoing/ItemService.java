@@ -1,12 +1,15 @@
 package com.system.bidding.ports.outgoing;
 
-import com.system.bidding.infrastructure.web.request.ItemParam;
+import com.system.bidding.infrastructure.database.entity.ItemEntity;
 import com.system.bidding.infrastructure.web.response.record.Announcement;
-import com.system.bidding.infrastructure.web.response.record.BiddingHistory;
+import com.system.bidding.infrastructure.web.response.record.BiddenItem;
 import com.system.bidding.infrastructure.web.response.record.Item;
-import com.system.bidding.infrastructure.web.response.record.ItemBiddingDetails;
+import com.system.bidding.infrastructure.web.response.record.ItemDetails;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Pageable;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
@@ -16,11 +19,19 @@ import org.springframework.data.domain.Pageable;
  */
 public interface ItemService {
 
+
     /**
      * @param pageable : page request
      * @return Page of data
      */
     PagedListHolder<Item> getItemList(final Pageable pageable);
+
+    /**
+     * @param pageable : page request
+     * @return Page of data
+     */
+    PagedListHolder<Item> getBiddingItemBoardList(
+            final Pageable pageable);
 
     /**
      * @param userId   : security principal
@@ -32,24 +43,30 @@ public interface ItemService {
             final Pageable pageable);
 
     /**
-     * @param userId       : security principal
-     * @param requestParam : page request
-     * @return Page of data
-     */
-    PagedListHolder<BiddingHistory> getBiddingHistory(
-            final Long userId,
-            final ItemParam requestParam);
-
-    /**
      * @param pageable : pageable's parameter
      * @return list of announcement
      */
-    PagedListHolder<Announcement> getAnnouncements(final Pageable pageable);
+    PagedListHolder<Announcement> getAnnouncements(
+            final Pageable pageable);
 
     /**
-     * @param itemId : Item's ID
-     * @return Item detials
+     * @param pageable
+     * @return
      */
-    ItemBiddingDetails getItemDetails(final Long itemId);
+    PagedListHolder<BiddenItem> getItemBiddingHistory(
+            final Pageable pageable);
+
+    /**
+     * @param itemId : Item Id
+     * @return ItemDetails
+     * @see ItemDetails#ItemDetails(Item, List, Date, Double, Double)
+     */
+    ItemDetails getItemDetails(final Long itemId);
+
+    /**
+     * @param item
+     * @return
+     */
+    Item saveItem(final ItemEntity item);
 
 }

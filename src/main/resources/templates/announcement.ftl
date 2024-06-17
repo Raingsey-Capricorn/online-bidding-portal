@@ -54,18 +54,9 @@
                     </tr>
                 </#list>
             </table>
-            <div class="pagination">
-                <label for="displays">Page:</label>
-                <select id="displays" onchange="selectAction(this);">
-                    <#foreach display in displays>
-                        <option value=${display}>${display}</option>
-                    </#foreach>
-                </select>
-                <#if hasPrev><button onclick="pagingAction(${prev})" id="previous"/></#if>
-                <#if hasNext><button onclick="pagingAction(${next})" id="next"/></#if>
-            </div>
-            <#include "../footer.ftl"/>
+            <#include "pagination.ftl"/>
+            <#include "footer.ftl"/>
         </div>
-        <#include "bidding_page_bid.ftl"/>
+        <#include "bidding/bidding_page_bid.ftl"/>
     </body>
 </html>

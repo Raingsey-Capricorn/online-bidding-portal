@@ -16,7 +16,7 @@ import java.util.List;
  * @param maxBiddingPrice  : maxBiddingPrice's param
  * @param lastBiddingPrice : lastBiddingPrice's param
  */
-public record ItemBiddingDetails(
+public record ItemDetails(
         Item item,
         List<Bidder> bidders,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

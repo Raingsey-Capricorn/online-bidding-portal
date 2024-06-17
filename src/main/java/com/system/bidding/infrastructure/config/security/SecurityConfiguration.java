@@ -58,15 +58,16 @@ public class SecurityConfiguration {
                         .ignoringRequestMatchers(
                                 URLEndpoints.BASE_VIEW_LOGIN_URL,
                                 URLEndpoints.OAUTH2_API_URL + "/**",
-                                URLEndpoints.AUTH_API_URL + "/**"
+                                URLEndpoints.AUTH_API_URL + "/**",
+                                URLEndpoints.BASE_API_URL + "/**"
                         ))
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers(HttpMethod.POST, URLEndpoints.OAUTH2_API_URL + "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, URLEndpoints.AUTH_API_URL + "/**").permitAll()
                         .requestMatchers(HttpMethod.GET, URLEndpoints.BASE_VIEW_LOGIN_URL).permitAll()
                         .requestMatchers(HttpMethod.GET, URLEndpoints.EXCLUDE_URI).permitAll()
-                        .anyRequest()
-                        .authenticated())
+                        .requestMatchers(URLEndpoints.BASE_API_URL + "/**").authenticated()
+                        .anyRequest().authenticated())
                 .exceptionHandling(configurer -> configurer
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.setStatus(HttpServletResponse.SC_FORBIDDEN);

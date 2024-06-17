@@ -8,22 +8,26 @@
                        hidden="hidden"
                        name="id"
                        required/>
-                <label class="form-label" for="bidding_item_name">Name
+                <label class="form-label" for="name">Name
                     <input type="text"
+                           name="name"
                            id="bidding_item_name"
                            class="form-input"
-                           disabled="disabled"/>
+                           readonly="readonly"
+                           required/>
                 </label>
-                <label class="form-label" for="bidding_item_desc"> Description
+                <label class="form-label" for="description">Description
                     <input type="text"
+                           name="description"
                            id="bidding_item_desc"
                            class="form-input"
-                           disabled="disabled"/>
+                           readonly="readonly"
+                           required/>
                 </label>
                 <label class="form-label" for="bidding_item_price">Price
-                    <input id="bidding_item_price"
+                    <input type="number"
                            name="price"
-                           type="number"
+                           id="bidding_item_price"
                            step=".00"
                            class="form-input"
                            placeholder="Price ..."

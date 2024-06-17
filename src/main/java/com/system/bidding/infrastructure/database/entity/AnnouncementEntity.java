@@ -32,7 +32,9 @@ public class AnnouncementEntity extends CommonEntity implements Serializable {
     @PrimaryKeyJoinColumn(name = "bidder_id")
     private BidderEntity bidderEntity;
 
-    @Column(name = "bidding_date")
+    @Column(name = "bidding_date",
+            columnDefinition = "datetime")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date biddingDate;
 
     @Column(name = "description")

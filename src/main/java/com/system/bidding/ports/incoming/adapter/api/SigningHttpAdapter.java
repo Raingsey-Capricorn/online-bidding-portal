@@ -5,7 +5,7 @@ import com.system.bidding.infrastructure.config.security.response.SSUserResponse
 import com.system.bidding.infrastructure.config.security.service.UserSigningService;
 import com.system.bidding.infrastructure.web.request.SignInParam;
 import com.system.bidding.infrastructure.web.request.SignUpParam;
-import com.system.bidding.ports.incoming.AuthenticationRestController;
+import com.system.bidding.ports.incoming.SigningRestController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import java.util.Objects;
+
 /**
  * Author  : pisethraringsey.suon
  * Email   : pisethraingsey@dr-tech.com
@@ -32,7 +34,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 @RequiredArgsConstructor
 @RequestMapping(URLEndpoints.AUTH_API_URL)
 public class SigningHttpAdapter
-        implements AuthenticationRestController<ResponseEntity<SSUserResponse>> {
+        implements SigningRestController<ResponseEntity<SSUserResponse>> {
 
     private final UserSigningService service;
 
@@ -85,7 +87,7 @@ public class SigningHttpAdapter
             final HttpServletRequest request,
             final HttpServletResponse response) {
 
-        final var sessionId = RequestContextHolder.getRequestAttributes().getSessionId();
+        final var sessionId = Objects.requireNonNull(RequestContextHolder.getRequestAttributes()).getSessionId();
         log.info(">>>> Request logged out of session: {}", sessionId);
         return ResponseEntity.ok(service.signOut(request));
     }

@@ -2,7 +2,6 @@ package com.system.bidding.infrastructure.web.request;
 
 import com.system.bidding.infrastructure.web.response.record.Bidder;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Optional;
@@ -12,15 +11,16 @@ import java.util.Optional;
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  *
- * @param id    : Item's ID
- * @param name  : item's name
- * @param price : item's price
+ * @param id     : Item's ID
+ * @param name   : item's name
+ * @param price  : item's price
+ * @param bidder : bidder's info
  */
-public record BiddingItemParam(
+public record BiddenItemParam(
         @NotNull(message = "Item's Id is required")
         Long id,
-        @NotEmpty(message = "Item name must be presented")
         String name,
+        String description,
         @NotNull(message = "Price is missing")
         @Min(value = 0, message = "Price can be started with 0 and required")
         Double price,

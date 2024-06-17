@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -15,26 +16,36 @@ import java.util.Objects;
  */
 @Data
 @MappedSuperclass
-public abstract class CommonEntity {
+public abstract class CommonEntity implements Serializable {
 
     @Setter(AccessLevel.PROTECTED)
-    @Column(name = "created_date")
+    @Column(name = "created_date",
+            columnDefinition = "datetime")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
     @Setter(AccessLevel.PROTECTED)
-    @Column(name = "updated_date")
+    @Column(name = "updated_date",
+            columnDefinition = "datetime")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
 
     @Setter(AccessLevel.PROTECTED)
-    @Column(name = "disabled_date")
+    @Column(name = "disabled_date",
+            columnDefinition = "datetime")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date disabledDate;
 
     @Setter(AccessLevel.PROTECTED)
-    @Column(name = "enabled_date")
+    @Column(name = "enabled_date",
+            columnDefinition = "datetime")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date enabledDate;
 
     @Setter(AccessLevel.PROTECTED)
-    @Column(name = "removed_date")
+    @Column(name = "removed_date",
+            columnDefinition = "datetime")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date removedDate;
 
     @Column(name = "created_by")
@@ -62,9 +73,7 @@ public abstract class CommonEntity {
     private String remark;
 
     @PrePersist
-    @PreUpdate
-    @PreRemove
-    private void prePersist() {
+    protected void prePersist() {
         if (!Objects.isNull(getCreatedBy())
                 && Objects.isNull(getCreatedDate())
         ) {
@@ -78,4 +87,32 @@ public abstract class CommonEntity {
             setDisabledDate(new Date());
         }
     }
+
+    @PreRemove
+    protected void PreRemove() {
+        if (!Objects.isNull(getRemovedBy())
+                && Objects.isNull(getRemovedDate())
+        ) {
+            setRemovedDate(new Date());
+            setStatus(false);
+        }
+        if (!Objects.isNull(getIsEnabled()) && Boolean.compare(getIsEnabled(), false) == 0) {
+            setDisabledDate(new Date());
+        }
+    }
+
+    @PreUpdate
+    protected void PreUpdate() {
+        if (!Objects.isNull(getUpdatedBy())
+                && Objects.isNull(getUpdatedDate())
+        ) {
+            setUpdatedDate(new Date());
+            setStatus(true);
+        }
+        if (!Objects.isNull(getUpdatedBy()) && Objects.isNull(getUpdatedDate())) {
+            setUpdatedDate(new Date());
+        }
+    }
+
+
 }

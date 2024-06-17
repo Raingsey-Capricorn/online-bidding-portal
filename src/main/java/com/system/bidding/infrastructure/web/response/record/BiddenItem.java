@@ -16,7 +16,7 @@ import java.util.Date;
  * @param maxBiddingPrice  : maxBiddingPrice's param
  * @param lastBiddingPrice : lastBiddingPrice's param
  */
-public record BiddingHistory(
+public record BiddenItem(
         Item item,
         Bidder bidder,
         Boolean isWon,

@@ -27,7 +27,7 @@
             function addItemAction() {
                 const formData = new FormData(document.getElementById("form-data"));
                 const http = new XMLHttpRequest();
-                http.open('POST', '${'/api/v1/items/add'}', true);
+                http.open('POST', '/api/v1/items');
                 http.send(formData);
                 http.onreadystatechange = function () {
                     if (http.readyState === 4 && http.status === 200) {
@@ -45,7 +45,7 @@
                 overlay.classList.toggle('show');
                 const itemId = e.firstElementChild.firstChild.textContent;
                 const http = new XMLHttpRequest();
-                http.open('GET', '/api/v1/items/' + itemId + '/details', true);
+                http.open('GET', '/api/v1/items/' + itemId, true);
                 http.send();
                 http.onreadystatechange = function () {
                     if (http.readyState === 4 && http.status === 200) {
@@ -112,20 +112,16 @@
                         <td class="has-details">${item.minBiddingPrice()}<span class="details">Click for details</span></td>
                         <td class="has-details">${item.maxBiddingPrice()}<span class="details">Click for details</span></td>
                         <td class="has-details">${item.entryDate()?string('dd.MM.yyyy HH:mm:ss')}<span class="details">Click for details</span></td>
-                        <td class="has-details">${item.expiryDate()?string('dd.MM.yyyy HH:mm:ss')}<span class="details">Click for details</span></td>
+                        <td class="has-details">
+                            <#if item.expiryDate()??>
+                                ${item.expiryDate()?string('dd.MM.yyyy HH:mm:ss')}
+                            <#else>N/A</#if>
+                            <span class="details">Click for details</span>
+                        </td>
                     </tr>
                 </#foreach>
             </table>
-            <div class="pagination">
-                <label for="displays">Page:</label>
-                <select id="displays" onchange="selectAction(this);">
-                    <#foreach display in displays>
-                        <option value=${display}>${display}</option>
-                    </#foreach>
-                </select>
-                <#if hasPrev><button onclick="pagingAction(${prev})" id="previous"/></#if>
-                <#if hasNext><button onclick="pagingAction(${next})" id="next"/></#if>
-            </div>
+            <#include "../pagination.ftl"/>
             <#include "../footer.ftl"/>
         </div>
         <#include "item_manage_add.ftl"/>

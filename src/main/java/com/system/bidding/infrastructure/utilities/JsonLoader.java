@@ -3,9 +3,9 @@ package com.system.bidding.infrastructure.utilities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.system.bidding.infrastructure.web.response.record.Announcement;
-import com.system.bidding.infrastructure.web.response.record.BiddingHistory;
+import com.system.bidding.infrastructure.web.response.record.BiddenItem;
 import com.system.bidding.infrastructure.web.response.record.Item;
-import com.system.bidding.infrastructure.web.response.record.ItemBiddingDetails;
+import com.system.bidding.infrastructure.web.response.record.ItemDetails;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -63,13 +63,13 @@ public abstract class JsonLoader {
 
     @Data
     @NoArgsConstructor
-    public static class History implements ResourceAsJSON<BiddingHistory> {
+    public static class History implements ResourceAsJSON<BiddenItem> {
         @JsonProperty(value = "data")
-        private List<BiddingHistory> data = new ArrayList<>();
+        private List<BiddenItem> data = new ArrayList<>();
 
         @Override
         @SneakyThrows
-        public List<BiddingHistory> load() {
+        public List<BiddenItem> load() {
             return new ObjectMapper().readValue(
                     History.class.getResourceAsStream("/sample-data/bidding-history.json"),
                     History.class
@@ -79,13 +79,13 @@ public abstract class JsonLoader {
 
     @Data
     @NoArgsConstructor
-    public static class Details implements ResourceAsJSON<ItemBiddingDetails> {
+    public static class Details implements ResourceAsJSON<ItemDetails> {
         @JsonProperty(value = "data")
-        private List<ItemBiddingDetails> data = new ArrayList<>();
+        private List<ItemDetails> data = new ArrayList<>();
 
         @Override
         @SneakyThrows
-        public List<ItemBiddingDetails> load() {
+        public List<ItemDetails> load() {
             return new ObjectMapper().readValue(
                     Details.class.getResourceAsStream("/sample-data/item-details.json"),
                     Details.class

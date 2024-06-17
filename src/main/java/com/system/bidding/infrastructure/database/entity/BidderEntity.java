@@ -29,7 +29,9 @@ public class BidderEntity extends CommonEntity implements Serializable {
     @Column(name = "authorizationProvider")
     private BidderType type;
 
-    @Column(name = "login_time")
+    @Column(name = "login_time",
+            columnDefinition = "datetime")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date loginTime;
 
     @Column(name = "user_name")

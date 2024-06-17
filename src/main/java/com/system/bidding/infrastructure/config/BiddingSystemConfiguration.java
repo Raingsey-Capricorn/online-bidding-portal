@@ -1,6 +1,9 @@
 package com.system.bidding.infrastructure.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.cache.CacheManagerCustomizer;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
@@ -9,9 +12,17 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * Owner   : pisethraingsey@yahoo.com
  * Project : BiddingSystem
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableAspectJAutoProxy
 @RequiredArgsConstructor
 public class BiddingSystemConfiguration {
+
+    /**
+     * @return
+     */
+    @Bean
+    public CacheManagerCustomizer<ConcurrentMapCacheManager> cacheManagerCustomizer() {
+        return (cacheManager) -> cacheManager.setAllowNullValues(false);
+    }
 
 }

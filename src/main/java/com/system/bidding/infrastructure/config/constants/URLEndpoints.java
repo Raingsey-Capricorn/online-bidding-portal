@@ -22,23 +22,23 @@ public abstract class URLEndpoints {
     public static final String AUTH_API_SIGN_IN_URL             = URLEndpoints.AUTH_API_URL + "/sign-in";
     public static final String OAUTH2_API_SIGN_UP_URL           = URLEndpoints.OAUTH2_API_URL + "/sign-up";
     public static final String OAUTH2_API_SIGN_IN_URL           = URLEndpoints.OAUTH2_API_URL + "/sign-in";
-
     public static final String BASE_VIEW_URL                    = "/view/" + API_VERSION;
     public static final String DASHBOARD_URL                    = "/dashboard";
     public static final String BASE_API_USER_URL                = BASE_API_URL + "/user";
     public static final String BASE_API_ADMIN_URL               = BASE_API_URL + "/admin";
-
     public static final String BASE_USER_VIEW_URL               = "/view/" + API_VERSION + "/user";
     public static final String BASE_ADMIN_VIEW_URL              = "/view/" + API_VERSION + "/admin";
     public static final String BASE_ITEM_URL                    = "/items";
-
     public static final String BIDDING_URL                      = "/bidding";
-
-    public static final String BASE_BIDDING_VIEW_URL            = "/view/" + API_VERSION + "/bidding";
+    public static final String BASE_BIDDING_VIEW_URL            = BASE_VIEW_URL + "/bidding";
+    public static final String BIDDING_VIEW_URL                 = "/bidding/items";
+    public static final String BIDDING_BOARD_VIEW_URL           = "/bidding/board";
+    public static final String BIDDING_HISTORY_VIEW_URL         = "/bidding/history";
+    public static final String BASE_BIDDING_API_URL             = BASE_API_URL + "/bidding";
     public static final String BIDDING_REQUEST_VIEW_URL         = "/request";
-    public static final String BIDDING_POST_VIEW_URL            = "/bid";
+    public static final String BIDDING_REQUEST_API_URL          = "/request";
+    public static final String BIDDING_API_URL                  = "/bid";
     public static final String BIDDING_ANNOUNCEMENT_URL         = "/announcement";
-
     public static final String[] EXCLUDE_URI = {
             "/configuration/**",
             "/v3/api-docs/**",

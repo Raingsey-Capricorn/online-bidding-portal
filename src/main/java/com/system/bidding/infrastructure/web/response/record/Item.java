@@ -23,8 +23,8 @@ import java.util.Date;
 public record Item(
         Long id,
         String name,
+        Long clientId,
         String description,
-        String clientId,
         Boolean availability,
         Double price,
         Double minBiddingPrice,

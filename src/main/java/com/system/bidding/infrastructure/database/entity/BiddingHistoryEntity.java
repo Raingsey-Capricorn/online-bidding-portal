@@ -26,7 +26,9 @@ public class BiddingHistoryEntity extends CommonEntity implements Serializable {
     @Column(name = "is_won")
     private Boolean isWon;
 
-    @Column(name = "bidding_date")
+    @Column(name = "bidding_date",
+            columnDefinition = "datetime")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date biddingDate;
 
     @Column(name = "bidding_price")
