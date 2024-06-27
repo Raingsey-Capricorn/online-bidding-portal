@@ -1,13 +1,13 @@
 package com.system.bidding.infrastructure.config.security;
 
 import com.system.bidding.infrastructure.config.constants.URLEndpoints;
-import com.system.bidding.infrastructure.config.security.filter.RequestFilter;
+import com.system.bidding.infrastructure.config.filter.RequestFilter;
+import com.system.bidding.infrastructure.config.security.handler.ExceptionCustomizingHandler;
 import com.system.bidding.infrastructure.config.security.handler.FailureHandler;
 import com.system.bidding.infrastructure.config.security.handler.SuccessHandler;
 import com.system.bidding.infrastructure.config.security.service.OAuth2UserService;
 import com.system.bidding.infrastructure.config.security.service.OidCUserService;
 import com.system.bidding.ports.outgoing.UserModelService;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +35,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class SecurityConfiguration {
 
     public final static String DEFAULTED_SUCCESS_URL = URLEndpoints.BASE_VIEW_URL + URLEndpoints.DASHBOARD_URL;
+    private final ExceptionCustomizingHandler exceptionCustomizingHandler;
     private final OAuth2UserService oAuth2UserService;
     private final RequestFilter authenticationFilter;
     private final UserModelService userModelService;
@@ -67,12 +68,9 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, URLEndpoints.BASE_VIEW_LOGIN_URL).permitAll()
                         .requestMatchers(HttpMethod.GET, URLEndpoints.EXCLUDE_URI).permitAll()
                         .requestMatchers(URLEndpoints.BASE_API_URL + "/**").authenticated()
-                        .anyRequest().authenticated())
-                .exceptionHandling(configurer -> configurer
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                            response.sendRedirect(URLEndpoints.BASE_VIEW_LOGIN_URL);
-                        }))
+                        .anyRequest()
+                        .authenticated())
+                .exceptionHandling(exceptionCustomizingHandler)
                 .formLogin(configurer -> configurer
                         .loginPage(URLEndpoints.BASE_VIEW_LOGIN_URL)
                         .defaultSuccessUrl(DEFAULTED_SUCCESS_URL))
@@ -84,7 +82,6 @@ public class SecurityConfiguration {
                         .failureHandler(failureHandler))
                 .build();
     }
-
 
     /**
      * @param config : authentication param

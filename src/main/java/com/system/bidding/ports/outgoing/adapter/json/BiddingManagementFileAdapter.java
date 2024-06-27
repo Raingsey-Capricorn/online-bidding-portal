@@ -55,11 +55,11 @@ public class BiddingManagementFileAdapter implements BiddingManagementService {
         requestParam.isWon()
                 .ifPresentOrElse(aBoolean ->
                                 listHolder.setSource(data.stream()
-                                        .filter(history -> Objects.equals(history.bidder().id(), 1)
+                                        .filter(history -> Objects.equals(history.bidder().userId(), 1)
                                                 && requestParam.isWon().get().equals(history.isWon())
                                         ).toList())
                         , () -> listHolder.setSource(data.stream()
-                                .filter(history -> Objects.equals(history.bidder().id(), 1))
+                                .filter(history -> Objects.equals(history.bidder().userId(), 1))
                                 .toList())
                 );
         final var pageable = requestParam.createPageRequest();
@@ -77,6 +77,15 @@ public class BiddingManagementFileAdapter implements BiddingManagementService {
     public BiddenItem bidItem(
             final Long userId,
             final BiddenItemParam itemParam) {
+        return null;
+    }
+
+    /**
+     * @param userId : session User's ID
+     * @return true = save successful, false = exception
+     */
+    @Override
+    public Boolean joinBidding(Long userId) {
         return null;
     }
 }

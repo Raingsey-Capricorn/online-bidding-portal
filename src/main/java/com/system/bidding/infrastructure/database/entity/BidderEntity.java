@@ -5,9 +5,13 @@ import com.system.bidding.infrastructure.utilities.BidderType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * LinkedIn : <a href="https://www.linkedin.com/in/piseth-raingsey-jr-a26308a1">Piseth Raingsey Jr.</a>
@@ -17,6 +21,7 @@ import java.util.Date;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "table_bidders")
 @EqualsAndHashCode(callSuper = true)
 public class BidderEntity extends CommonEntity implements Serializable {
@@ -26,16 +31,28 @@ public class BidderEntity extends CommonEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "authorizationProvider")
+    @PrimaryKeyJoinColumn(name = "user_id")
+    private Long userId;
+
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private BidderType type;
+
+    @Column(name = "user_name")
+    private String userName;
 
     @Column(name = "login_time",
             columnDefinition = "datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date loginTime;
 
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "session_start_date",
+            columnDefinition = "datetime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date sessionStartDate;
+
+    @Column(name = "session_duration")
+    private Integer sessionDuration;
 
     @Column(name = "credential")
     private String credential;
@@ -43,12 +60,28 @@ public class BidderEntity extends CommonEntity implements Serializable {
     @Column(name = "authorization_server")
     private String authorizationServer;
 
-    @Column(name = "authorization_type")
+    @Column(name = "authorization_provider")
     @Enumerated(EnumType.STRING)
     private SecurityConstant.AuthorizationProvider authorizationProvider;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn(name = "bidding_history_id")
-    private BiddingHistoryEntity biddingHistoryEntity;
+    @Transient
+    @OneToMany
+    private List<BiddingHistoryEntity> biddingHistories = new ArrayList<>();
 
+    /**
+     * @param id       : bidder's ID
+     * @param userId   : user's ID
+     * @param type     : bidder type
+     * @param userName : user Name
+     */
+    public BidderEntity(
+            final Optional<Long> id,
+            final Optional<Long> userId,
+            final Optional<BidderType> type,
+            final Optional<String> userName) {
+        this.id = id.orElse(null);
+        this.userId = userId.orElse(null);
+        this.type = type.orElse(null);
+        this.userName = userName.orElse(null);
+    }
 }

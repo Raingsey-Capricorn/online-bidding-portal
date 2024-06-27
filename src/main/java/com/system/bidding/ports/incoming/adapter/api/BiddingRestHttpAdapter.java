@@ -13,6 +13,7 @@ import com.system.bidding.ports.outgoing.BiddingManagementService;
 import com.system.bidding.ports.outgoing.UserModelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -34,7 +36,7 @@ import java.util.List;
 @PreAuthorize(value = "hasAnyAuthority('USER','ANONYMOUS')")
 public class BiddingRestHttpAdapter implements BiddingRestController {
 
-    private final BiddingManagementService managementService;
+    private final BiddingManagementService biddingManagementService;
     private final UserModelService userModelService;
     private final UserMapper userMapper;
 
@@ -50,7 +52,7 @@ public class BiddingRestHttpAdapter implements BiddingRestController {
         final var context = SecurityContextHolder.getContext();
         final var userId = userMapper.mapUserId(context, userModelService);
         log.info(">>>> BiddingHistory for user : {}", userId);
-        final var listHolder = managementService.getItems(userId, requestParam);
+        final var listHolder = biddingManagementService.getItems(userId, requestParam);
         return ResponseEntity.ok(listHolder.getPageList());
     }
 
@@ -69,7 +71,7 @@ public class BiddingRestHttpAdapter implements BiddingRestController {
         final var context = SecurityContextHolder.getContext();
         final var userId = userMapper.mapUserId(context, userModelService);
         log.info(">>>> Bidding item {} from user : {}", requestParam, userId);
-        final var bidItem = managementService.bidItem(userId, requestParam);
+        final var bidItem = biddingManagementService.bidItem(userId, requestParam);
         return ResponseEntity.ok(bidItem);
     }
 
@@ -89,40 +91,27 @@ public class BiddingRestHttpAdapter implements BiddingRestController {
      * @see BiddingSession#BiddingSession(Long, String, String, Long, String)
      */
     @Override
+    @Cacheable(cacheNames = "biddingSession", cacheManager = "cacheManager")
     @PostMapping(value = URLEndpoints.BIDDING_REQUEST_API_URL)
-    public ResponseEntity<BiddingSession> biddingRequest() {
+    public ResponseEntity<HashMap<String, Object>> biddingRequest() {
 
-        //TODO : apply caching programmatically here
         final var context = SecurityContextHolder.getContext();
         final var userId = userMapper.mapUserId(context, userModelService);
-        log.info(">>>> New request to join bidding from user: {}", userId);
-        return null;
+        biddingManagementService.joinBidding(userId);
+        log.info(">>>> Bidding request : {}", context.getAuthentication().getName());
+        return ResponseEntity.ok(
+                new HashMap<>() {{
+                    put("message", "Bidding session started with 2mn duration");
+                }}
+        );
     }
-
 
 /*
-
-    @Override
-    @GetMapping("/bidding")
-    public ResponseEntity<String> message() {
-        return ResponseEntity.ok("Hello !");
-    }
-
-    @Override
-//    @GetMapping(value = URLEndpoints.BASE_ITEM_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Item>> getItems(
-            final @ModelAttribute(name = "pageRequest") RequestPageableParam requestParam) {
-
-        log.info("requestParam: {}", requestParam);
-        return ResponseEntity.ok(itemService.getItemList(requestParam.createPageRequest()).getPageList());
-    }
-
     @Override
 //    @PostMapping(value = URLEndpoints.BASE_ITEM_URL + "/add",
 //            produces = MediaType.APPLICATION_JSON_VALUE,
 //            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> applyBidding(RequestItemParam requestParam) {
-
         log.error("Received request to save item {}", requestParam);
         return ResponseEntity.ok().build();
     }
@@ -136,6 +125,7 @@ public class BiddingRestHttpAdapter implements BiddingRestController {
         log.error("Received request to save item {}", requestParam);
         return ResponseEntity.ok().build();
     }
+
     @Override
 //    @GetMapping(value = "/{id}" + URLEndpoints.BASE_ITEM_URL,
 //            produces = MediaType.APPLICATION_JSON_VALUE)

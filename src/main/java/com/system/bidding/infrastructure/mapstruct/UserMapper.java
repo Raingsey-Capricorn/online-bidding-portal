@@ -6,6 +6,7 @@ import com.system.bidding.infrastructure.config.security.response.OAuth2UserResp
 import com.system.bidding.infrastructure.config.security.response.OidCUserResponse;
 import com.system.bidding.infrastructure.web.request.SignUpParam;
 import com.system.bidding.ports.outgoing.UserModelService;
+import jakarta.annotation.Nonnull;
 import org.mapstruct.Mapper;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -40,7 +42,7 @@ public interface UserMapper {
             return ((UserEntityModel) userModelService.loadUserByUsername(name.toString())).getUser().getId();
         } else if (principal instanceof OAuth2User) {
             final var name = ((OAuth2UserResponse) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAttribute("name");
-            return ((UserEntityModel) userModelService.loadUserByUsername(name.toString())).getUser().getId();
+            return ((UserEntityModel) userModelService.loadUserByUsername(Objects.requireNonNull(name).toString())).getUser().getId();
         } else if (principal instanceof UserEntityModel) {
             return ((UserEntityModel) principal).getUser().getId();
         }
@@ -89,19 +91,19 @@ public interface UserMapper {
      * @return UserEntityModel instance
      */
     default UserEntityModel from(
-            final SignUpParam signUpParam,
-            final PasswordEncoder passwordEncoder) {
+            final @Nonnull SignUpParam signUpParam,
+            final @Nonnull PasswordEncoder passwordEncoder) {
 
-        final var user = new UserEntityModel()
+        final var model = new UserEntityModel()
                 .setFirstName(signUpParam.firstName())
                 .setLastName(signUpParam.lastName())
                 .setEmail(signUpParam.email())
                 .setPassword(passwordEncoder.encode(signUpParam.password().get()))
                 .setRole(SecurityConstant.Authority.valueOf(signUpParam.role().get().name()));
-        user.getUser().setProvider(SecurityConstant.AuthorizationProvider.SSUP);
-        user.getUser().setCreatedBy(signUpParam.userName());
-        user.getUser().setUserName(signUpParam.email());
-        return user;
+        model.getUser().setProvider(SecurityConstant.AuthorizationProvider.SSUP);
+        model.getUser().setCreatedBy(signUpParam.userName());
+        model.getUser().setUserName(signUpParam.email());
+        return model;
     }
 
 }

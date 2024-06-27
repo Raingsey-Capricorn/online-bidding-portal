@@ -1,6 +1,7 @@
 package com.system.bidding.infrastructure.web.response.record;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Builder;
 
 import java.util.Date;
 
@@ -16,6 +17,7 @@ import java.util.Date;
  * @param maxBiddingPrice  : maxBiddingPrice's param
  * @param lastBiddingPrice : lastBiddingPrice's param
  */
+@Builder
 public record BiddenItem(
         Item item,
         Bidder bidder,

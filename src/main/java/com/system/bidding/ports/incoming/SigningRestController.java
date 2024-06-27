@@ -15,17 +15,6 @@ import java.util.Optional;
 public interface SigningRestController<T> {
 
     /**
-     * @param signUpParam : up-signing request
-     * @param request     : http-servlet-request
-     * @param response    : http-servlet-response
-     * @return Authentication Response's instance
-     * @see SignUpParam#SignUpParam(String, String, String, String, Optional, Optional, Optional)
-     */
-    T signUp(final SignUpParam signUpParam,
-             final HttpServletRequest request,
-             final HttpServletResponse response);
-
-    /**
      * @param signInParam : in-signing request
      * @param request     : http-servlet-request
      * @param response    : http-servlet-response
@@ -33,6 +22,17 @@ public interface SigningRestController<T> {
      * @see SignInParam#SignInParam(String, String)
      */
     T signIn(final SignInParam signInParam,
+             final HttpServletRequest request,
+             final HttpServletResponse response);
+
+    /**
+     * @param signUpParam : up-signing request
+     * @param request     : http-servlet-request
+     * @param response    : http-servlet-response
+     * @return Authentication Response's instance
+     * @see SignUpParam#SignUpParam(String, String, String, String, Optional, Optional, Optional)
+     */
+    T signUp(final SignUpParam signUpParam,
              final HttpServletRequest request,
              final HttpServletResponse response);
 

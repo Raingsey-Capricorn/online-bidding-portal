@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -59,8 +60,9 @@ public class ItemEntity extends CommonEntity implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date expiryDate;
 
-    @OneToMany(mappedBy = "itemEntity")
-    private List<BiddingHistoryEntity> biddingHistories;
+    @Transient
+    @OneToMany
+    private List<BiddingHistoryEntity> biddingHistories = new ArrayList<>();
 
     @Override
     protected void prePersist() {

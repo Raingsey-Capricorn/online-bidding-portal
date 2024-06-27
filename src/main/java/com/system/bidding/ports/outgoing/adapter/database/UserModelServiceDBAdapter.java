@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserModelServiceDBAdapter implements UserModelService {
 
+    private final static String LOAD_USER_FROM_DB = "<<<< loaded user from database repository";
     private final UserRepository repository;
 
     /**
@@ -55,6 +56,8 @@ public class UserModelServiceDBAdapter implements UserModelService {
      */
     @Override
     public UserEntityModel findUserByUserName(String nameOrEmail) {
+
+        log.info(LOAD_USER_FROM_DB);
         final var user = new UserEntity();
         user.setUserName(nameOrEmail);
         user.setEmail(nameOrEmail);
@@ -67,11 +70,11 @@ public class UserModelServiceDBAdapter implements UserModelService {
     /**
      * @param username the username identifying the user whose data is required.
      * @return UserDetails instance
-     * @throws UsernameNotFoundException
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("<<<< loaded user from database repository");
+
+        log.info(LOAD_USER_FROM_DB);
         return repository.findByUserName(username)
                 .map(UserEntityModel::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));

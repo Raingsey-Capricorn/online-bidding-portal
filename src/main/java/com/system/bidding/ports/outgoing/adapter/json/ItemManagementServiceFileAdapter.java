@@ -6,7 +6,7 @@ import com.system.bidding.infrastructure.web.response.record.Announcement;
 import com.system.bidding.infrastructure.web.response.record.BiddenItem;
 import com.system.bidding.infrastructure.web.response.record.Item;
 import com.system.bidding.infrastructure.web.response.record.ItemDetails;
-import com.system.bidding.ports.outgoing.ItemService;
+import com.system.bidding.ports.outgoing.ItemManagementService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.support.PagedListHolder;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 //@Primary
 @Service
-public class ItemServiceFileAdapter implements ItemService {
+public class ItemManagementServiceFileAdapter implements ItemManagementService {
 
     /**
      * @param pageable : page request
@@ -107,11 +107,13 @@ public class ItemServiceFileAdapter implements ItemService {
     }
 
     /**
-     * @param requestParam
-     * @return
+     * @param requestParam : pageable's parameter
+     * @return list of bidden item
      */
     @Override
-    public PagedListHolder<BiddenItem> getItemBiddingHistory(final Pageable requestParam) {
+    public PagedListHolder<BiddenItem> getItemBiddingHistory(
+            final Long userId,
+            final Pageable requestParam) {
 
         final var listHolder = new PagedListHolder<BiddenItem>();
         listHolder.setSource(new JsonLoader.History().load());

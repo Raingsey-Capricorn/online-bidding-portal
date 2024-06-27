@@ -77,14 +77,19 @@ public abstract class CommonEntity implements Serializable {
         if (!Objects.isNull(getCreatedBy())
                 && Objects.isNull(getCreatedDate())
         ) {
-            setCreatedDate(new Date());
+            final var datetime = new Date();
+            setEnabledBy(getCreatedBy());
+            setEnabledDate(datetime);
+            setCreatedDate(datetime);
+            setIsEnabled(true);
             setStatus(true);
         }
         if (!Objects.isNull(getUpdatedBy()) && Objects.isNull(getUpdatedDate())) {
             setUpdatedDate(new Date());
         }
-        if (!Objects.isNull(getIsEnabled()) && Boolean.compare(getIsEnabled(), true) == 0) {
+        if (!Objects.isNull(getIsEnabled()) && Boolean.compare(getIsEnabled(), false) == 0) {
             setDisabledDate(new Date());
+            setStatus(false);
         }
     }
 

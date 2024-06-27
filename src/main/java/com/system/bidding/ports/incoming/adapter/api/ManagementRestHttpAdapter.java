@@ -7,7 +7,7 @@ import com.system.bidding.infrastructure.web.request.RequestPageableParam;
 import com.system.bidding.infrastructure.web.response.record.Item;
 import com.system.bidding.infrastructure.web.response.record.ItemDetails;
 import com.system.bidding.ports.incoming.ManagementRestController;
-import com.system.bidding.ports.outgoing.ItemService;
+import com.system.bidding.ports.outgoing.ItemManagementService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -31,7 +31,7 @@ import java.util.Optional;
 @PreAuthorize(value = "hasAnyAuthority('ADMIN','SYSTEM','USER','ANONYMOUS')")
 public class ManagementRestHttpAdapter implements ManagementRestController<Item> {
 
-    private final ItemService itemService;
+    private final ItemManagementService itemManagementService;
     private final ItemMapper itemMapper;
 
     /**
@@ -47,7 +47,7 @@ public class ManagementRestHttpAdapter implements ManagementRestController<Item>
     public ResponseEntity<Item> createItem(RequestItemParam item) {
 
         final var body = Optional.of(itemMapper.from(item))
-                .map(itemService::saveItem)
+                .map(itemManagementService::saveItem)
                 .orElse(null);
         log.info("Create Item: {}", body);
         return ResponseEntity.ok(body);
@@ -93,7 +93,7 @@ public class ManagementRestHttpAdapter implements ManagementRestController<Item>
     public ResponseEntity<ItemDetails> readItem(@PathVariable(value = "id") final Long itemId) {
 
         log.info(">>>> Received request to get item {}", itemId);
-        final var itemById = Optional.of(itemService.getItemDetails(itemId))
+        final var itemById = Optional.of(itemManagementService.getItemDetails(itemId))
                 .orElse(null);
         return ResponseEntity.ok(itemById);
     }

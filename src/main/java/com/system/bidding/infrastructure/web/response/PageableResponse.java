@@ -47,19 +47,19 @@ public abstract class PageableResponse {
     }
 
     /**
-     * @param pageableParam : pageableParam
-     * @param listHolder    : list holder
+     * @param param      : pageableParam
+     * @param listHolder : list holder
      * @return HashMap<String, ?> map
      * @see RequestPageableParam#RequestPageableParam(Optional, Optional, Optional, Optional)
      * @see Item#Item(Long, String, Long, String, Boolean, Double, Double, Double, Date, Date)
      */
     public static HashMap<String, ?> pagingBiddingItems(
-            final RequestPageableParam pageableParam,
+            final RequestPageableParam param,
             final PagedListHolder<Item> listHolder) {
 
         return buildPaginationMap(
-                pageableParam.getSize().orElse(DEFAULT_SIZE),
-                pageableParam.getPage().orElse(DEFAULT_PAGE),
+                param.getSize().orElse(DEFAULT_SIZE),
+                param.getPage().orElse(DEFAULT_PAGE),
                 listHolder);
     }
 

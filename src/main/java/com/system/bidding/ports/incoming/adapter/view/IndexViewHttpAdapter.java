@@ -7,7 +7,7 @@ import com.system.bidding.infrastructure.web.request.ItemParam;
 import com.system.bidding.infrastructure.web.request.RequestPageableParam;
 import com.system.bidding.infrastructure.web.response.PageableResponse;
 import com.system.bidding.ports.incoming.IndexViewController;
-import com.system.bidding.ports.outgoing.ItemService;
+import com.system.bidding.ports.outgoing.ItemManagementService;
 import com.system.bidding.ports.outgoing.UserModelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ import java.util.Optional;
 public class IndexViewHttpAdapter implements IndexViewController {
 
     private final UserModelService userModelService;
-    private final ItemService itemService;
+    private final ItemManagementService itemManagementService;
     private final UserMapper userMapper;
 
     /**
@@ -87,7 +87,7 @@ public class IndexViewHttpAdapter implements IndexViewController {
             final Model model,
             final @ModelAttribute(name = "requestParam") RequestPageableParam requestParam) {
 
-        final var listHolder = itemService.getAnnouncements(requestParam.createPageRequest());
+        final var listHolder = itemManagementService.getAnnouncements(requestParam.createPageRequest());
         model.addAllAttributes(PageableResponse.pagingAnnouncement(requestParam, listHolder));
         return "announcement";
     }
@@ -108,7 +108,7 @@ public class IndexViewHttpAdapter implements IndexViewController {
 
         final var context = SecurityContextHolder.getContext();
         final var userId = userMapper.mapUserId(context, userModelService);
-        final var listHolder = itemService.getItemList(userId, requestParam.createPageRequest());
+        final var listHolder = itemManagementService.getItemList(userId, requestParam.createPageRequest());
         model.addAllAttributes(PageableResponse.pagingItems(requestParam, listHolder));
         model.addAttribute("title", "Item Management");
         return "management/item_manage";
@@ -128,7 +128,9 @@ public class IndexViewHttpAdapter implements IndexViewController {
             final Model model,
             final @ModelAttribute(name = "requestParam") ItemParam requestParam) {
 
-        final var data = itemService.getItemBiddingHistory(requestParam.createPageRequest());
+        final var context = SecurityContextHolder.getContext();
+        final var userId = userMapper.mapUserId(context, userModelService);
+        final var data = itemManagementService.getItemBiddingHistory(userId, requestParam.createPageRequest());
         model.addAllAttributes(PageableResponse.pagingHistory(requestParam, data));
         model.addAttribute("title", "Items History");
         return "bidding/bidding_history";
@@ -148,7 +150,7 @@ public class IndexViewHttpAdapter implements IndexViewController {
             final Model model,
             final @ModelAttribute(name = "requestParam") RequestPageableParam requestParam) {
 
-        final var listHolder = itemService.getBiddingItemBoardList(requestParam.createPageRequest());
+        final var listHolder = itemManagementService.getBiddingItemBoardList(requestParam.createPageRequest());
         model.addAllAttributes(PageableResponse.pagingItems(requestParam, listHolder));
         return "bidding/bidding_board";
     }

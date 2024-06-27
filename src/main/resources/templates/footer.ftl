@@ -1,2 +1,2 @@
 <br/><br/>
-<div>Copyright © Piseth Riangsey</div>
+<div>Copyright © Piseth Raingsey</div>

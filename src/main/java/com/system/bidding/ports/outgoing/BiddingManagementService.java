@@ -36,9 +36,14 @@ public interface BiddingManagementService {
     /**
      * @param itemParam : item parameter
      * @return BiddenItem successfully placed for bidding
-     * @see BiddenItemParam#BiddenItemParam(Long, String, Double, Optional)
+     * @see BiddenItemParam#BiddenItemParam(Long, String, String, Double)
      */
     BiddenItem bidItem(
             final Long userId,
             final BiddenItemParam itemParam);
+
+    /**
+     * @param userId : session User's ID
+     */
+    Boolean joinBidding(Long userId);
 }

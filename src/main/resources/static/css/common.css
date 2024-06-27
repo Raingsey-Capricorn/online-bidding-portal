@@ -24,6 +24,10 @@ body {
     background-color: #ddd;
 }
 
+.item_list td.number {
+    text-align: right;
+}
+
 .item_list th {
     color: white;
     text-align: left;

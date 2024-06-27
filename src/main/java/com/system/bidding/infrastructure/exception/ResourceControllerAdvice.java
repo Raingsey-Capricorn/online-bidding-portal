@@ -25,7 +25,7 @@ public class ResourceControllerAdvice {
     /**
      * @param notValidException : notValidException
      * @param request           : request
-     * @return
+     * @return ResponseEntity<Object>
      */
     @SneakyThrows
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
@@ -54,9 +54,9 @@ public class ResourceControllerAdvice {
     }
 
     /**
-     * @param credentialsException
-     * @param request
-     * @return
+     * @param credentialsException : Credential exception
+     * @param request              : request
+     * @return ResponseEntity<Object>
      */
     @ExceptionHandler(value = {BadCredentialsException.class})
     public ResponseEntity<Object> handleBadCredentials(
@@ -66,4 +66,5 @@ public class ResourceControllerAdvice {
         log.error(credentialsException.getMessage());
         return ResponseEntity.badRequest().body(credentialsException.getMessage());
     }
+
 }

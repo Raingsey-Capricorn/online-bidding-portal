@@ -1,13 +1,13 @@
-package com.system.bidding.infrastructure.config.security.filter;
+package com.system.bidding.infrastructure.config.filter;
 
 import com.system.bidding.infrastructure.config.constants.URLEndpoints;
-import com.system.bidding.ports.outgoing.UserModelService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.CacheManager;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -24,7 +24,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class RequestFilter extends OncePerRequestFilter {
 
-    private final UserModelService userModelService;
+    private final CacheManager cacheManager;
 
 
     /**

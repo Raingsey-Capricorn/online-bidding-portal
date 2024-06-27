@@ -32,7 +32,7 @@
                 const price = row.children[3].firstChild.textContent.replace(/,/g, '');
                 document.getElementById('bidding_item_id').value = row.children[0].firstChild.textContent;
                 document.getElementById('bidding_item_name').value = row.children[1].firstChild.textContent;
-                document.getElementById('bidding_item_desc').value = row.children[2].firstChild.textContent;
+                document.getElementById('bidding_item_desc').value = row.children[3].firstChild.textContent;
                 document.getElementById('bidding_item_price').value = Number(price);
                 document.getElementById('bidding_item_price').setAttribute("min", price);
                 document.getElementById('bidding-popup-overlay').classList.toggle('show');
@@ -73,8 +73,8 @@
                         <td class="has-details">${item.id()}<span class="details">Click to bid</span></td>
                         <td class="has-details">${item.name()}<span class="details">Click to bid</span> </td>
                         <td class="has-details"><#if item.description()??>${item.description()}<#else>N/A</#if><span class="details">Click to bid</span></td>
-                        <td class="has-details">${item.price()}<span class="details">Click to bid</span></td>
-                        <td class="has-details">${item.maxBiddingPrice()}<span class="details">Click to bid</span></td>
+                        <td class="has-details number">${item.price()}<span class="details">Click to bid</span></td>
+                        <td class="has-details number">${item.maxBiddingPrice()}<span class="details">Click to bid</span></td>
                         <td class="has-details">
                             <#if item.entryDate()??>
                                 ${item.entryDate()?string('dd.MM.yyyy HH:mm:ss')}

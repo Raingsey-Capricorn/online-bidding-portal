@@ -14,7 +14,7 @@ import java.util.Date;
  * @param winner          : winner's parameter
  * @param biddingDate     : biddingDate's parameter
  * @param description     : description's parameter
- * @param bidderAttend    : bidderAttend's parameter
+ * @param bidderAttend    : bidder attended parameter
  * @param originalPrice   : originalPrice's parameter
  * @param minBiddingPrice : minBiddingPrice's parameter
  * @param maxBiddingPrice : maxBiddingPrice's parameter

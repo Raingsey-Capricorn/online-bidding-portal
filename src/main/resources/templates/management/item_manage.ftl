@@ -108,9 +108,9 @@
                         <td class="has-details">${item.description()}<span class="details">Click for details</span></td>
                         <td class="has-details">${item.clientId()}<span class="details">Click for details</span></td>
                         <td class="has-details">${item.availability()?c}<span class="details">Click for details</span></td>
-                        <td class="has-details">${item.price()}<span class="details">Click for details</span></td>
-                        <td class="has-details">${item.minBiddingPrice()}<span class="details">Click for details</span></td>
-                        <td class="has-details">${item.maxBiddingPrice()}<span class="details">Click for details</span></td>
+                        <td class="has-details number">${item.price()}<span class="details">Click for details</span></td>
+                        <td class="has-details number">${item.minBiddingPrice()}<span class="details">Click for details</span></td>
+                        <td class="has-details number">${item.maxBiddingPrice()}<span class="details">Click for details</span></td>
                         <td class="has-details">${item.entryDate()?string('dd.MM.yyyy HH:mm:ss')}<span class="details">Click for details</span></td>
                         <td class="has-details">
                             <#if item.expiryDate()??>

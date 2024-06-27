@@ -21,6 +21,22 @@
                     '&sortField=maxBiddingPrice&sortDirection=DESC'
                 ;
             }
+
+            function joinBiddingAction(element) {
+                const http = new XMLHttpRequest();
+                http.open('POST', '/api/v1/bidding/request', true);
+                http.send();
+                http.onreadystatechange = function () {
+                    if (http.readyState === 4 && http.status === 200) {
+                        const response = JSON.parse(http.response);
+                        alert(response.message);
+                        self.location = 'board?page=' + ${page} +
+                            '&size=' + ${size} +
+                            '&sortField=maxBiddingPrice&sortDirection=DESC'
+                        ;
+                    }
+                }
+            }
         </script>
     </head>
     <body>
@@ -28,7 +44,7 @@
         <div class="content">
             <nobr>
                 <a href="${'/view/v1/dashboard'}" class="navigation">Dashboard</a> |
-                <a href="${'/view/v1/bidding/board'}" class="navigation">Join Bidding</a>
+                <button onclick="joinBiddingAction(this);" style="font-size: inherit; cursor: pointer" class="navigation">Join Bidding</button>
             </nobr>
             <br/><br/>
             <table class="item_list">
@@ -48,7 +64,7 @@
                 <#foreach biddingItem in items>
                     <tr class="tableBody">
                         <td>${biddingItem.item().id()}</td>
-                        <td>${biddingItem.bidder().firstName() + biddingItem.bidder().lastName()}</td>
+                        <td>${biddingItem.bidder().userName()}</td>
                         <td>${biddingItem.bidder().type().name()}</td>
                         <td>${biddingItem.isWon()?c}</td>
                         <td>${biddingItem.item().name()}</td>

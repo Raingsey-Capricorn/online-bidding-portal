@@ -56,6 +56,11 @@ public class StringValidatorUtil {
         return !Pattern.compile("^([a-zA-Z0-9.\\s_-])*$").matcher(text).find();
     }
 
+    /**
+     * @param lengthAllowance : string length limit
+     * @param text            : string value to validate
+     * @return true => string too long, false=> is short and available
+     */
     public static boolean isLongerThan(int lengthAllowance, String text) {
         return text.length() > lengthAllowance;
     }
@@ -83,6 +88,5 @@ public class StringValidatorUtil {
                 || codePoint >= 0xE000 && codePoint <= 0xFFFD
         );
     }
-
 
 }

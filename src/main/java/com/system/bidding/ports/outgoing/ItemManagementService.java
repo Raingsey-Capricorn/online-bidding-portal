@@ -17,8 +17,7 @@ import java.util.List;
  * Project : BiddingSystem
  * This service is for reading resource only
  */
-public interface ItemService {
-
+public interface ItemManagementService {
 
     /**
      * @param pageable : page request
@@ -50,22 +49,23 @@ public interface ItemService {
             final Pageable pageable);
 
     /**
-     * @param pageable
-     * @return
+     * @param pageable : pageable's parameter
+     * @return PagedListHolder<BiddenItem>
      */
     PagedListHolder<BiddenItem> getItemBiddingHistory(
+            final Long userId,
             final Pageable pageable);
 
     /**
-     * @param itemId : Item Id
+     * @param itemId : Item ID
      * @return ItemDetails
      * @see ItemDetails#ItemDetails(Item, List, Date, Double, Double)
      */
     ItemDetails getItemDetails(final Long itemId);
 
     /**
-     * @param item
-     * @return
+     * @param item : item entity
+     * @return Item
      */
     Item saveItem(final ItemEntity item);
 

@@ -3,7 +3,6 @@ package com.system.bidding.ports.incoming;
 import com.system.bidding.infrastructure.web.request.BiddenItemParam;
 import com.system.bidding.infrastructure.web.request.ItemParam;
 import com.system.bidding.infrastructure.web.response.record.BiddenItem;
-import com.system.bidding.infrastructure.web.response.record.BiddingSession;
 import com.system.bidding.infrastructure.web.response.record.Item;
 import com.system.bidding.infrastructure.web.response.record.ItemDetails;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +45,6 @@ public interface BiddingRestController {
     /**
      * @return bidding session for current user
      */
-    ResponseEntity<BiddingSession> biddingRequest();
+    ResponseEntity<?> biddingRequest();
 
 }
